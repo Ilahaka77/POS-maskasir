@@ -36,43 +36,36 @@
 </head>
 
 <body class="animsition">
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        
-        <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <!-- HEADER DESKTOP-->
-
-            <div class="container-fluid">
-                <div class="row justiy-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ __('Verify Your Email Address') }}
+    <div class="container" style="height: 90vh">
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">MasKasir</span>
+        </nav>
+        <div class="row align-items-center justify-content-center" style="height: 100%">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+                    <div class="card-body">
+                        @if ($status == 'success')
+                        <div class="alert alert-success" role="alert">
+                            {{ $message }}
                         </div>
-                        <div class="card-body">
-                            <div class="alert alert-success" role="alert">
-                                Berhasil melakukan verifikasi email
-                            </div>
+                        @elseif ($status == 'error')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $message }}
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
-            <!-- MAIN CONTENT-->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright">
-                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
-
     </div>
+    <footer class="row">
+        <div class="col-md-12">
+            <div class="copyright">
+                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Jquery JS-->
     <script src="{{ url('vendor/jquery-3.2.1.min.js') }}"></script>

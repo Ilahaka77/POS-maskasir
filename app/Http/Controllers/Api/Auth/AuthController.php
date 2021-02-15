@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Member;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,6 +29,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'member'
+        ]);
+        
+        $member = Member::create([
+            'user_id' => $user->id,
+            'kode_member' => $this->getKodeMember()
         ]);
 
         $accessToken = $user->createToken('authToken')->accessToken;
@@ -58,5 +65,12 @@ class AuthController extends Controller
             'data' => auth()->user(),
             'token' => $accessToken
         ]);
+    }
+
+    public function getKodeMember(){
+        $year = date("Y");
+        $data = count(DB::table('members')->whereYear('created_at', $year)->get());
+
+        return 'M'.$year.$data+1;
     }
 }

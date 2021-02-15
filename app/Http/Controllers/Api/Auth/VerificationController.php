@@ -68,7 +68,7 @@ class VerificationController extends Controller
         }
 
         // return response(['message' => 'Successfully Verified']);
-        return view('auth.apiverify');
+        return view('auth.apiverify', ['status' => 'success', 'message' => 'Email verification was successfully done']);
     }
 
     public function resend(Request $request)

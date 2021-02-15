@@ -109,7 +109,7 @@ class ResetPasswordController extends Controller
     protected function sendResetResponse(Request $request, $response)
     {
 
-        return response(['message' => trans($response)]);
+        return view('auth.apiverify',['status' => 'success', 'message' => 'Password reset successfully']);
     }
 
     /**
@@ -121,7 +121,7 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        return response(['error' => trans($response)]);
+        return view('auth.apiverify',['status' => 'error', 'message' => 'Failed to reset the password.'.trans($response)]);
     }
 
     /**
