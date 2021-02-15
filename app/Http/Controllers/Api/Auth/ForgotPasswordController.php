@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        dd($request->is('api*'));
+        // dd($request->is('api*'));
         $validator = Validator::make($request->only('email'),[
             'email' => 'required|email'
         ]);
