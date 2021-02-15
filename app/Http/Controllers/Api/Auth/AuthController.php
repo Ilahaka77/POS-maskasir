@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Member;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,13 @@ class AuthController extends Controller
         return response()->json([
             'data' => auth()->user(),
             'token' => $accessToken
+        ]);
+    }
+
+    public function profil(){
+        $user = User::with('member')->find(Auth::id());
+        return response()->json([
+            'data' => $user
         ]);
     }
 

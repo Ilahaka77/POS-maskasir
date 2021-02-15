@@ -23,4 +23,5 @@ Route::post('/login', 'Api\Auth\AuthController@login');
 Route::post('/password/email', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('/email/resend', 'Api\Auth\VerificationController@resend')->name('verification.resend');
 Route::get('/email/verify/{id}/{hash}', 'Api\Auth\VerificationController@verify')->name('verification.verify');
+Route::get('/profil', 'Api\Auth\AuthController@profil');
 
