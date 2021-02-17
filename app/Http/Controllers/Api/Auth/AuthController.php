@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MemberResource;
 use App\Member;
 use App\User;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class AuthController extends Controller
         $accessToken = $user->createToken('authToken')->accessToken;
 
         return response()->json([
-            'data' => $user,
+            'data' => new MemberResource($user),
             'token' => $accessToken
         ]);
     }
@@ -63,16 +64,78 @@ class AuthController extends Controller
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
         return response()->json([
-            'data' => auth()->user(),
+            'data' => new MemberResource(auth()->user()),
             'token' => $accessToken
         ]);
     }
 
     public function profil(){
         $user = auth('api')->user();
-        return response()->json([
-            $user
+        return new MemberResource($user);
+    }
+
+    public function editProil(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'foto_profil' => 'required|image',
+            'tgl_lahir' => 'required',
+            'alamat' => 'required'
         ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->first());
+        }
+
+        
+        try {
+            $user = User::find(Auth::id())->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'foto_profil' => $this->uploadFoto($request->foto_profil),
+                'tgl_lahir' => $request->tgl_lahir,
+                'alamat' => $request->alamat
+            ]);
+    
+            return response()->json([
+                'status' => 'Update Successfully',
+                'data' => new MemberResource($user)
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'Update Failed',
+                'message' => $th->getMessage()
+            ], 400);
+        }
+    }
+
+    public function resetPassword(Request $request){
+        $validator = Validator::make($request->all(),[
+            'old_password' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+        
+        if($validator->fails()){
+            return response()->json($validator->errors()->first());
+        }
+
+        $user = User::find(Auth::id());
+
+        if(!Hash::check($request->oldPassword, $user->password)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Password lama yang dimasukkan salah'
+            ]);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json([
+            'status' => 'Change Password successfully'
+        ]);
+
     }
 
     public function getKodeMember(){
