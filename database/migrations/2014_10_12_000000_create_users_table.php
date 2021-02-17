@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->sting('foto_profil')->nullable();
             $table->date('tgl_lahir');
             $table->string('alamat')->nullable();
-            $table->enum('role', ['super admin', 'pimpinan', 'kasir', 'staff', 'member']);
+            $table->enum('role', ['admin', 'pimpinan', 'kasir', 'staff', 'member']);
             $table->rememberToken();
             $table->timestamps();
         });
