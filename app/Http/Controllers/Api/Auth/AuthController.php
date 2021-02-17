@@ -69,9 +69,9 @@ class AuthController extends Controller
     }
 
     public function profil(){
-        $user = User::with('member')->find(Auth::id());
+        $user = auth('api')->user();
         return response()->json([
-            'data' => $user
+            $user
         ]);
     }
 
