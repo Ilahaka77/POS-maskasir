@@ -21,10 +21,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'Api\Auth\AuthController@register');
 Route::post('/login', 'Api\Auth\AuthController@login');
 Route::post('/password/email', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::put('/password/change', 'Api\Auth\AuthController@resetPassword');
 Route::get('/email/resend', 'Api\Auth\VerificationController@resend')->name('verification.resend');
 Route::get('/email/verify/{id}/{hash}', 'Api\Auth\VerificationController@verify')->name('verification.verify');
-Route::put('/profil/edit', 'Api\Auth\AuthController@editProil');
-Route::get('/profil', 'Api\Auth\AuthController@profil');
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::put('/password/change', 'Api\Auth\AuthController@resetPassword');
+    Route::put('/profil/edit', 'Api\Auth\AuthController@editProil');
+    Route::get('/profil', 'Api\Auth\AuthController@profil');
+
+});
 
 

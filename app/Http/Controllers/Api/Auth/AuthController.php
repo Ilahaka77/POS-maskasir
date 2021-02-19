@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
 use App\Member;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,18 +83,19 @@ class AuthController extends Controller
             'tgl_lahir' => 'required',
             'alamat' => 'required'
         ]);
-
+        // dd(auth()->user());
         if($validator->fails()){
             return response()->json($validator->errors()->first());
         }
 
         
+        $user = User::find(Auth::id());
         try {
-            $user = User::find(Auth::id())->update([
+            $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'foto_profil' => $this->uploadFoto($request->foto_profil),
-                'tgl_lahir' => $request->tgl_lahir,
+                'tgl_lahir' => new Carbon($request->tgl_lahir),
                 'alamat' => $request->alamat
             ]);
     

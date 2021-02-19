@@ -19,6 +19,5 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('api/password/{token}', 'Api\Auth\ResetPasswordController@showResetForm')->name('api.password.reset');
-Route::post('api/password/reset', 'Api\Auth\ResetPasswordController@reset')->name('api.password.update');
 
 Route::get('/home', 'HomeController@index')->name('home');

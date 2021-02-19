@@ -11,6 +11,11 @@
                     <div class="login-logo d-flex justify-content-center">
                         <span style="font-size: 60px"><i class="fas fa-user-circle"></i></span>&nbsp;<h3 class="align-self-center">User Login</h3>
                     </div>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            Reset password successfully. Now you can login with your new password
+                        </div>
+                    @endif
                     <div class="login-form">
                         <form action="{{ url('login') }}" method="post">
                             @csrf

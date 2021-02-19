@@ -29,4 +29,5 @@ class Controller extends BaseController
 
         return $gambar;
     }
+
 }
