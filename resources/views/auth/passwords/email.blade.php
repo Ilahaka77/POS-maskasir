@@ -59,7 +59,7 @@
                         <span style="font-size: 60px"><i class="fas fa-wrench"></i></span>&nbsp;<h3 class="align-self-center">Forgot Password</h3>
                     </div>
                     <div class="login-form">
-                        <form action="{{ url('login') }}" method="post">
+                        <form action="{{ route('password.email') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label>Email Address</label>

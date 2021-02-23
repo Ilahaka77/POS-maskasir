@@ -52,4 +52,10 @@ class SupplierController extends Controller
         }
 
     }
+
+    public function update(Request $request, $id){
+        
+        $supplier = Supplier::find($id);
+        
+    }
 }
