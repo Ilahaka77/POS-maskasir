@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
                [
                     'name' => 'Super Admin',
                     'email' => 'superadmin@email.com',
-                    'email_verified_at' => Carbon::now(),
                     'password' => Hash::make('password'),
                     'role' => 'admin'
                 ],
