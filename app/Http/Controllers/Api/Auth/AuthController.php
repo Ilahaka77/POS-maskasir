@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MemberResource;
+use App\Http\Resources\StaffResource;
 use App\Member;
 use App\User;
 use Carbon\Carbon;
@@ -64,10 +65,17 @@ class AuthController extends Controller
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
-        return response()->json([
-            'data' => new MemberResource(auth()->user()),
-            'token' => $accessToken
-        ]);
+        if(auth()->user()->role == 'member'){
+            return response()->json([
+                'data' => new MemberResource(auth()->user()),
+                'token' => $accessToken
+            ],200);
+        }else{
+            return response()->json([
+                'data' => new StaffResource(auth()->user()),
+                'token' => $accessToken
+            ],200);
+        }
     }
 
     public function profil(){

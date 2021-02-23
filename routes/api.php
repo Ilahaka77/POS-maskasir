@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/profil/edit', 'Api\Auth\AuthController@editProil');
     Route::get('/profil', 'Api\Auth\AuthController@profil');
 
+    Route::get('/supplier', 'Api\SupplierController@index')->middleware('role:admin,staff');
+    Route::post('/supplier', 'Api\SupplierController@create')->middleware('role:admin,staff');
 });
 
 
