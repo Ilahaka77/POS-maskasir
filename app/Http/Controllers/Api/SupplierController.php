@@ -53,9 +53,20 @@ class SupplierController extends Controller
 
     }
 
+    public function show($id){
+
+        $supplier = Supplier::find($id);
+
+        return response()->json([
+            'data' => $supplier
+        ], 200)
+    }
+
     public function update(Request $request, $id){
         
         $supplier = Supplier::find($id);
+
+
         
     }
 }

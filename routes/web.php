@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     return view('auth.login');
 });
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('api/password/{token}', 'Api\Auth\ResetPasswordController@showResetForm')->name('api.password.reset');
 
