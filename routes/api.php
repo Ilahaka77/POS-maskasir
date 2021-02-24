@@ -32,14 +32,16 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/profil', 'Api\Auth\AuthController@profil');
 
     //CRUD Supplier
-    Route::get('/supplier', 'Api\SupplierController@index')->middleware('role:admin,staff');
-    Route::post('/supplier', 'Api\SupplierController@create')->middleware('role:admin,staff');
-    Route::get('/supplier/{id}', 'Api\SupplierController@show')->middleware('role:admin,staff');
-    Route::put('/supplier/{id}', 'Api\SupplierController@update')->middleware('role:admin,staff');
+    Route::get('/supplier', 'Api\SupplierController@index');
+    Route::post('/supplier', 'Api\SupplierController@create');
+    Route::get('/supplier/{id}', 'Api\SupplierController@show');
+    Route::put('/supplier/{id}', 'Api\SupplierController@update');
 
     //CRUD Barang
     Route::get('/kategori', 'Api\CategoryController@index');
     Route::post('/kategori', 'Api\CategoryController@create');
+    Route::get('/kategori/{id}', 'Api\CategoryController@show');
+    Route::put('/kategori/{id}', 'Api\CategoryController@update');
 });
 
 
