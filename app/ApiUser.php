@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\PasswordResetNotification;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,5 +50,11 @@ class ApiUser extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification);
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        
+        $this->notify(new PasswordResetNotification($token));
+        
     }
 }
