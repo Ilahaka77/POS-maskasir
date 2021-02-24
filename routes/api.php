@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('/supplier', 'Api\SupplierController@index')->middleware('role:admin,staff');
     Route::post('/supplier', 'Api\SupplierController@create')->middleware('role:admin,staff');
+    Route::get('/supplier/{id}', 'Api\SupplierConotroller@show')->middleware('role:admin,staff');
 });
 
 
