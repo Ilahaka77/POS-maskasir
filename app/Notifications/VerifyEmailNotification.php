@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
@@ -10,20 +12,26 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 
-class VerifyEmail extends Notification
+class VerifyEmailNotification extends Notification
 {
-    /**
-     * The callback that should be used to build the mail message.
-     *
-     * @var \Closure|null
-     */
+    use Queueable;
+
     public static $toMailCallback;
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
 
     /**
-     * Get the notification's channels.
+     * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array|string
+     * @return array
      */
     public function via($notifiable)
     {
@@ -31,7 +39,7 @@ class VerifyEmail extends Notification
     }
 
     /**
-     * Build the mail representation of the notification.
+     * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
@@ -50,17 +58,11 @@ class VerifyEmail extends Notification
             ->action(Lang::get('Verify Email Address'), $verificationUrl)
             ->line(Lang::get('If you did not create an account, no further action is required.'));
     }
-
-    /**
-     * Get the verification URL for the given notifiable.
-     *
-     * @param  mixed  $notifiable
-     * @return string
-     */
+    
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'api.verification.verify',
+            'verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
                 'id' => $notifiable->getKey(),
@@ -68,15 +70,16 @@ class VerifyEmail extends Notification
             ]
         );
     }
-
     /**
-     * Set a callback that should be used when building the notification mail message.
+     * Get the array representation of the notification.
      *
-     * @param  \Closure  $callback
-     * @return void
+     * @param  mixed  $notifiable
+     * @return array
      */
-    public static function toMailUsing($callback)
+    public function toArray($notifiable)
     {
-        static::$toMailCallback = $callback;
+        return [
+            //
+        ];
     }
 }
