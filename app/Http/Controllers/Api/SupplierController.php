@@ -73,7 +73,10 @@ class SupplierController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->messages()->first());
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->messages()->first()
+            ], 400);
         }
 
         try {

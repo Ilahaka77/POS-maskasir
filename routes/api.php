@@ -31,10 +31,15 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/profil/edit', 'Api\Auth\AuthController@editProil');
     Route::get('/profil', 'Api\Auth\AuthController@profil');
 
+    //CRUD Supplier
     Route::get('/supplier', 'Api\SupplierController@index')->middleware('role:admin,staff');
     Route::post('/supplier', 'Api\SupplierController@create')->middleware('role:admin,staff');
     Route::get('/supplier/{id}', 'Api\SupplierController@show')->middleware('role:admin,staff');
     Route::put('/supplier/{id}', 'Api\SupplierController@update')->middleware('role:admin,staff');
+
+    //CRUD Barang
+    Route::get('/kategori', 'Api\CategoryController@index');
+    Route::post('/kategori', 'Api\CategoryController@create');
 });
 
 
