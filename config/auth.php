@@ -71,7 +71,7 @@ return [
             'model' => App\User::class,
         ],
         'apiusers' => [
-            'driver' => 'elequent',
+            'driver' => 'eloquent',
             'model' => App\ApiUser::class,
         ]
 
