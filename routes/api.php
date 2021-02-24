@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/supplier', 'Api\SupplierController@index')->middleware('role:admin,staff');
     Route::post('/supplier', 'Api\SupplierController@create')->middleware('role:admin,staff');
     Route::get('/supplier/{id}', 'Api\SupplierController@show')->middleware('role:admin,staff');
+    Route::put('/supplier/{id}', 'Api\SupplierController@update')->middleware('role:admin,staff');
 });
 
 
