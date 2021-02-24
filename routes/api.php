@@ -21,8 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'Api\Auth\AuthController@register');
 Route::post('/login', 'Api\Auth\AuthController@login');
 Route::post('/password/email', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('/email/resend', 'Api\Auth\VerificationController@resend')->name('verification.resend');
-Route::get('/email/verify/{id}/{hash}', 'Api\Auth\VerificationController@verify')->name('verification.verify');
+Route::get('/email/resend', 'Api\Auth\VerificationController@resend')->name('api.verification.resend');
+Route::get('/email/verify/{id}/{hash}', 'Api\Auth\VerificationController@verify')->name('api.verification.verify');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/password/change', 'Api\Auth\AuthController@resetPassword');

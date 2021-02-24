@@ -59,14 +59,40 @@ class SupplierController extends Controller
 
         return response()->json([
             'data' => $supplier
-        ], 200)
+        ], 200);
     }
 
     public function update(Request $request, $id){
         
         $supplier = Supplier::find($id);
 
+        $validator = Validator::make($request->all(),[
+            'nama_supplier' => 'required|string',
+            'alamat' => 'required',
+            'no_telepon' => 'required'
+        ]);
 
+        if($validator->fails()){
+            return response()->json($validator->messages()->first());
+        }
+
+        try {
+            $supplier->update([
+                'nama_supplier' => $request->nama_supplier,
+                'alamat' => $request->alamat,
+                'no_telepon' => $request->no_telepon
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Update data supplier is successfully'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 400);
+        }   
         
     }
 }
