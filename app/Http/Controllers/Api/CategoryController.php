@@ -17,6 +17,15 @@ class CategoryController extends Controller
         ], 200);
     }
 
+    public function show($id)
+    {
+        $kategori = Category::find($id);
+
+        return response()->json([
+            'data' => $kategori
+        ], 200);
+    }
+
     public function create(Request $request){
         
         $validator = Validator::make($request->all(),[
@@ -47,6 +56,38 @@ class CategoryController extends Controller
                 'status' => 'error',
                 'message' => $th->getMessage()
             ], 201);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $kategori = Category::find($id);
+
+        $validator = Validator::make($request->all(),[
+            'kategori' => 'required|string'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->messages()->first()
+            ], 400);
+        }
+
+        try {
+            $kategori->update([
+                'kategori' => $request->kategori
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Update Category is successfully'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
         }
     }
 }
