@@ -58,11 +58,11 @@ class VerifyEmailNotification extends Notification
             ->action(Lang::get('Verify Email Address'), $verificationUrl)
             ->line(Lang::get('If you did not create an account, no further action is required.'));
     }
-    
+
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'verification.verify',
+            'api.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
                 'id' => $notifiable->getKey(),
