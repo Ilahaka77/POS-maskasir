@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Barang;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BarangResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +15,7 @@ class BarangController extends Controller
         $barang = Barang::all();
 
         return response()->json([
-            'data' => $barang
+            'data' => BarangResource::collection($barang)
         ], 200);
     }
 
@@ -23,7 +24,7 @@ class BarangController extends Controller
         $barang = Barang::find($id);
 
         return response()->json([
-            'data' => $barang
+            'data' => new BarangResource($barang)
         ], 200);
     }
 
