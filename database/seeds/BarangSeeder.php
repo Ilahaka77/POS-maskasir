@@ -17,54 +17,14 @@ class BarangSeeder extends Seeder
         DB::table('barangs')->insert([
             [
                 'barcode' => $this->randomNumber(10),
-                'nama_barang' => Str::random(10),
+                'nama_barang' => 'Barang 1',
                 'kategori_id' => rand(1,3),
-                'merek' => Str::random(5),
+                'merek' => 'Merek 1',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
                 'harga_beli' => rand(100000, 100000000),
                 'harga_jual' => rand(100000, 100000000),
             ],
-            [
-                'barcode' => $this->randomNumber(10),
-                'nama_barang' => Str::random(10),
-                'kategori_id' => rand(1,3),
-                'merek' => Str::random(5),
-                'stok' => rand(1,99),
-                'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
-            ],
-            [
-                'barcode' => $this->randomNumber(10),
-                'nama_barang' => Str::random(10),
-                'kategori_id' => rand(1,3),
-                'merek' => Str::random(5),
-                'stok' => rand(1,99),
-                'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
-            ],
-            [
-                'barcode' => $this->randomNumber(10),
-                'nama_barang' => Str::random(10),
-                'kategori_id' => rand(1,3),
-                'merek' => Str::random(5),
-                'stok' => rand(1,99),
-                'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
-            ],
-            [
-                'barcode' => $this->randomNumber(10),
-                'nama_barang' => Str::random(10),
-                'kategori_id' => rand(1,3),
-                'merek' => Str::random(5),
-                'stok' => rand(1,99),
-                'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
-            ]
         ]);
     }
 
