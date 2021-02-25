@@ -16,7 +16,7 @@ class BarangSeeder extends Seeder
         
         DB::table('barangs')->insert([
             [
-                'barcode' => $this->randomNumber(10),
+                'barcode' => $this->randomNumber(12),
                 'nama_barang' => 'Barang 1',
                 'kategori_id' => rand(1,3),
                 'merek' => 'Merek 1',
@@ -26,7 +26,7 @@ class BarangSeeder extends Seeder
                 'harga_jual' => rand(100000, 100000000),
             ],
             [
-                'barcode' => $this->randomNumber(10),
+                'barcode' => $this->randomNumber(12),
                 'nama_barang' => 'Barang 2',
                 'kategori_id' => rand(1,3),
                 'merek' => 'Merek 2',
@@ -36,7 +36,7 @@ class BarangSeeder extends Seeder
                 'harga_jual' => rand(100000, 100000000),
             ],
             [
-                'barcode' => $this->randomNumber(10),
+                'barcode' => $this->randomNumber(12),
                 'nama_barang' => 'Barang 3',
                 'kategori_id' => rand(1,3),
                 'merek' => 'Merek 3',
@@ -46,7 +46,7 @@ class BarangSeeder extends Seeder
                 'harga_jual' => rand(100000, 100000000),
             ],
             [
-                'barcode' => $this->randomNumber(10),
+                'barcode' => $this->randomNumber(12),
                 'nama_barang' => 'Barang 4',
                 'kategori_id' => rand(1,3),
                 'merek' => 'Merek 4',
@@ -56,7 +56,7 @@ class BarangSeeder extends Seeder
                 'harga_jual' => rand(100000, 100000000),
             ],
             [
-                'barcode' => $this->randomNumber(10),
+                'barcode' => $this->randomNumber(12),
                 'nama_barang' => 'Barang 5',
                 'kategori_id' => rand(1,3),
                 'merek' => 'Merek 5',
