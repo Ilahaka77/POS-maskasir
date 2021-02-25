@@ -17,7 +17,7 @@ class BarangResource extends JsonResource
         return [
             'barcode' => $this->barcode,
             'nama_barang' => $this->nama_barang,
-            'kategori' => $this->kategori,
+            'kategori' => $this->kategori->kategori,
             'merek' => $this->merek,
             'stok' => $this->stok,
             'diskon' => (float) $this->diskon,
