@@ -10,6 +10,6 @@ class Barang extends Model
 
     public function kategori()
     {
-        return $this->belongsTo(App\Category::class);
+        return $this->belongsTo('App\Category');
     }
 }
