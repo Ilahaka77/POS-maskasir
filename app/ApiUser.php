@@ -44,7 +44,7 @@ class ApiUser extends Authenticatable implements MustVerifyEmail
     // Relationship
     public function member()
     {
-        return $this->hasOne('App\Member');
+        return $this->hasOne('App\Member', 'user_id');
     }
 
     public function sendEmailVerificationNotification()
