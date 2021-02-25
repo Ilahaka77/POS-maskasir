@@ -42,6 +42,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/kategori', 'Api\CategoryController@create');
     Route::get('/kategori/{id}', 'Api\CategoryController@show');
     Route::put('/kategori/{id}', 'Api\CategoryController@update');
+
+    Route::get('/barang', 'Api\BarangController@index');
+    Route::post('/barang', 'Api\BarangController@create');
+    Route::get('/barang/{id}', 'Api\BarangController@show');
+    Route::put('/barang/{id}', 'Api\BarangController@update');
 });
 
 
