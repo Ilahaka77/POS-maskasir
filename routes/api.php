@@ -37,16 +37,23 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/supplier/{id}', 'Api\SupplierController@show');
     Route::put('/supplier/{id}', 'Api\SupplierController@update');
 
-    //CRUD Barang
+    //CRUD Kategori
     Route::get('/kategori', 'Api\CategoryController@index');
     Route::post('/kategori', 'Api\CategoryController@create');
     Route::get('/kategori/{id}', 'Api\CategoryController@show');
     Route::put('/kategori/{id}', 'Api\CategoryController@update');
 
+    //CRUD Barang
     Route::get('/barang', 'Api\BarangController@index');
     Route::post('/barang', 'Api\BarangController@create');
     Route::get('/barang/{id}', 'Api\BarangController@show');
     Route::put('/barang/{id}', 'Api\BarangController@update');
+
+    //CRUD Pengeluaran
+    Route::get('/pengeluaran', 'Api\PengeluaranController@index');
+    Route::post('/pengeluaran', 'Api\PengeluaranController@create');
+    Route::get('/pengeluaran/{id}', 'Api\PengeluaranController@show');
+    Route::put('/pengeluaran/{id}', 'Api\PengeluaranController@update');
 });
 
 
