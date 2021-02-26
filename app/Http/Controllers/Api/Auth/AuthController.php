@@ -32,6 +32,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'foto_profil' => 'https://via.placeholder.com/150',
             'role' => 'member'
         ]);
         
@@ -83,7 +84,7 @@ class AuthController extends Controller
         return new MemberResource($user);
     }
 
-    public function editProil(Request $request){
+    public function editProfil(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'email' => 'required|email',

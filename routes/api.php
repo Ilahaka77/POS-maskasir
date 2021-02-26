@@ -28,7 +28,7 @@ Route::get('/email/verify/{id}/{hash}', 'Api\Auth\VerificationController@verify'
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/password/change', 'Api\Auth\AuthController@resetPassword');
-    Route::put('/profil/edit', 'Api\Auth\AuthController@editProil');
+    Route::put('/profil/edit', 'Api\Auth\AuthController@editProfil');
     Route::get('/profil', 'Api\Auth\AuthController@profil');
 
     //CRUD Supplier

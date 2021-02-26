@@ -21,6 +21,7 @@ class MemberResource extends JsonResource
             'email' => $this->email,
             'email_verification' => $this->email_verified_at,
             'umur' => Carbon::parse($this->tgl_lahir)->diff(Carbon::now())->format('%y'),
+            'role' => $this->role,
             'alamat' => $this->alamat,
             'saldo' => $this->member->saldo
         ];
