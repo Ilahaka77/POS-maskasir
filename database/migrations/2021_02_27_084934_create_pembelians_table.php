@@ -15,7 +15,6 @@ class CreatePembeliansTable extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_pembelian');
             $table->foreignId('supplier_id')->constrained('suppliers');
             $table->integer('total_bayar');
             $table->timestamps();

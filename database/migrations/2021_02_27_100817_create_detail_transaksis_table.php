@@ -15,11 +15,13 @@ class CreateDetailTransaksisTable extends Migration
     {
         Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->constrained('transaksis');
+            $table->string('kode_transaksi');
             $table->foreignId('barang_id')->constrained('barangs');
             $table->integer('jumlah');
             $table->integer('harga');
             $table->timestamps();
+            $table->foreign('kode_transaksi')->references('kode_transaksi')->on('transaksis');
+
         });
     }
 
