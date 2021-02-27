@@ -12,4 +12,9 @@ class Barang extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+    public function detailPembelian()
+    {
+        return $this->hasMany('App\DetailPembelian');
+    }
 }

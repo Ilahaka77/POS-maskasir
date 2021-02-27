@@ -17,6 +17,7 @@ class MemberResource extends JsonResource
     {
         return [
             'kode_member' => $this->member->kode_member,
+            'foto_profil' => $this->foto_profil,
             'name' => $this->name,
             'email' => $this->email,
             'email_verification' => $this->email_verified_at,

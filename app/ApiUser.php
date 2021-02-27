@@ -47,6 +47,12 @@ class ApiUser extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Member', 'user_id');
     }
 
+    public function transaksi()
+    {
+        return $this->hasMany('App\Transaksi', 'kasir');
+    }
+
+    //Notification
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification);

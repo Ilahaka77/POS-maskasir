@@ -16,6 +16,7 @@ class StaffResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'foto_profil' => $this->foto_profil,
             'name' => $this->name,
             'email' => $this->email,
             'email_verification' => $this->email_verified_at,
