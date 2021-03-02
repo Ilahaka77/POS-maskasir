@@ -54,6 +54,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/pengeluaran', 'Api\PengeluaranController@create');
     Route::get('/pengeluaran/{id}', 'Api\PengeluaranController@show');
     Route::put('/pengeluaran/{id}', 'Api\PengeluaranController@update');
+
+    Route::post('/pembelian', 'Api\PembelianController@create');
+    Route::get('/pembelian', 'Api\PembelianController@index');
+    Route::get('/pembelian/{id}', 'Api\PembelianController@show');
 });
 
 

@@ -20,7 +20,6 @@ class CreateDetailTransaksisTable extends Migration
             $table->integer('jumlah');
             $table->integer('harga');
             $table->timestamps();
-            $table->foreign('kode_transaksi')->references('kode_transaksi')->on('transaksis');
 
         });
     }

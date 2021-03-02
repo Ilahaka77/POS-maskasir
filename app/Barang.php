@@ -15,6 +15,6 @@ class Barang extends Model
 
     public function detailPembelian()
     {
-        return $this->hasMany('App\DetailPembelian');
+        return $this->hasMany('App\DetailPembelian', 'barang_id');
     }
 }
