@@ -58,6 +58,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/pembelian', 'Api\PembelianController@create');
     Route::get('/pembelian', 'Api\PembelianController@index');
     Route::get('/pembelian/{id}', 'Api\PembelianController@show');
+
+    Route::post('/member', 'Api\MemberController@create');
+    Route::get('/member', 'Api\MemberController@index');
+    Route::get('/member/{id}', 'Api\MemberController@show');
+    Route::put('/member/{id}', 'Api\MemberController@update');
 });
 
 

@@ -16,7 +16,8 @@ class SupplierSeeder extends Seeder
             [
                 'nama_supplier' => 'supplier 1',
                 'alamat' => 'alamat supplier 1',
-                'no_telepon' => '123456789012'
+                'no_telepon' => '123456789012',
+                
             ],
             [
                 'nama_supplier' => 'supplier 2',

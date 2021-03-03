@@ -38,7 +38,8 @@ class AuthController extends Controller
         
         $member = Member::create([
             'user_id' => $user->id,
-            'kode_member' => $this->getKodeMember()
+            'kode_member' => $this->getKodeMember(),
+            'saldo' => 0
         ]);
 
         $accessToken = $user->createToken('authToken')->accessToken;
@@ -87,8 +88,8 @@ class AuthController extends Controller
     public function editProfil(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'foto_profil' => 'required|image',
+            'email' => 'required|email|unique:users',
+            'foto_profil' => 'image',
             'tgl_lahir' => 'required',
             'alamat' => 'required'
         ]);
@@ -97,13 +98,13 @@ class AuthController extends Controller
             return response()->json($validator->errors()->first());
         }
 
-        
+        $gambar = ($request->foto_profil !== null)?$this->uploadFoto($request->foto_profil):'https://via.placeholder.com/150';
         $user = User::find(Auth::id());
         try {
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'foto_profil' => $this->uploadFoto($request->foto_profil),
+                'foto_profil' => $gambar,
                 'tgl_lahir' => new Carbon($request->tgl_lahir),
                 'alamat' => $request->alamat
             ]);

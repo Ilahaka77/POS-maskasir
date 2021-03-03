@@ -17,9 +17,9 @@ class CreateTransaksisTable extends Migration
             $table->id();
             $table->string('kode_transaksi');
             $table->string('kode_member')->nullable();
-            $table->integer('harga_total');
-            $table->integer('bayar');
-            $table->integer('kembalian');
+            $table->integer('harga_total')->nullable();
+            $table->integer('bayar')->nullable();
+            $table->integer('kembalian')->nullable();
             $table->double('diskon')->nullable();
             $table->foreignId('kasir')->constrained('users');
             $table->timestamps();
