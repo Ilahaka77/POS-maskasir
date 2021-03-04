@@ -22,8 +22,8 @@ class BarangSeeder extends Seeder
                 'merek' => 'Merek 1',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
+                'harga_beli' => 1000,
+                'harga_jual' => 2000,
             ],
             [
                 'barcode' => $this->randomNumber(12),
@@ -32,8 +32,8 @@ class BarangSeeder extends Seeder
                 'merek' => 'Merek 2',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
+                'harga_beli' => 1000,
+                'harga_jual' => 2000,
             ],
             [
                 'barcode' => $this->randomNumber(12),
@@ -42,8 +42,8 @@ class BarangSeeder extends Seeder
                 'merek' => 'Merek 3',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
+                'harga_beli' => 1000,
+                'harga_jual' => 2000,
             ],
             [
                 'barcode' => $this->randomNumber(12),
@@ -52,8 +52,8 @@ class BarangSeeder extends Seeder
                 'merek' => 'Merek 4',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
+                'harga_beli' => 1000,
+                'harga_jual' => 2000,
             ],
             [
                 'barcode' => $this->randomNumber(12),
@@ -62,8 +62,8 @@ class BarangSeeder extends Seeder
                 'merek' => 'Merek 5',
                 'stok' => rand(1,99),
                 'diskon' => mt_rand(0,100)/100,
-                'harga_beli' => rand(100000, 100000000),
-                'harga_jual' => rand(100000, 100000000),
+                'harga_beli' => 1000,
+                'harga_jual' => 2000,
             ],
         ]);
     }

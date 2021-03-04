@@ -16,6 +16,7 @@ class MemberResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'kode_member' => $this->member->kode_member,
             'foto_profil' => $this->foto_profil,
             'name' => $this->name,

@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailTransaksi extends Model
 {
-    protected $fillable = ['transaksi_id', 'barang_id', 'jumlah', 'harga'];
+    protected $fillable = ['kode_transaksi', 'barang_id', 'jumlah', 'harga'];
 
     public function transaksi()
     {
-        return $this->belongsTo('App\Transaksi');
+        return $this->belongsTo('App\Transaksi', 'kode_transaksi');
     }
 
     public function barang()

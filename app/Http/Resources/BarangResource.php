@@ -15,6 +15,7 @@ class BarangResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'barcode' => $this->barcode,
             'nama_barang' => $this->nama_barang,
             'kategori' => $this->kategori->kategori,

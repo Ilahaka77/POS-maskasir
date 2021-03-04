@@ -118,6 +118,30 @@ class MemberController extends Controller
         }
     }
 
+    public function topup(Request $request, $id){
+        $validator = Validator::make($request->all(),[
+            'topup' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()
+            ], 400);
+        }
+
+        $member = Member::where('user_id', $id)->first();
+
+        $member->update([
+            'saldo' => $member->saldo + $request->topup 
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'TopUp saldo is successfully'
+        ], 200);
+    }
+
     public function getKodeMember(){
         $year = date("Y");
         $data = count(DB::table('members')->whereYear('created_at', $year)->get());

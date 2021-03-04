@@ -55,14 +55,24 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/pengeluaran/{id}', 'Api\PengeluaranController@show');
     Route::put('/pengeluaran/{id}', 'Api\PengeluaranController@update');
 
+    //CRUD Pembelian
     Route::post('/pembelian', 'Api\PembelianController@create');
     Route::get('/pembelian', 'Api\PembelianController@index');
     Route::get('/pembelian/{id}', 'Api\PembelianController@show');
 
+    //CRUD Member
     Route::post('/member', 'Api\MemberController@create');
     Route::get('/member', 'Api\MemberController@index');
     Route::get('/member/{id}', 'Api\MemberController@show');
     Route::put('/member/{id}', 'Api\MemberController@update');
+    Route::put('/member/{id}/topup', 'Api\MemberController@topup');
+
+    //CRUD Penjualan
+    Route::get('/penjualan', 'Api\TransaksiController@index');
+    Route::get('/penjualan/baru', 'Api\TransaksiController@newTransaksi');
+    Route::get('/penjualan/cencel/{id}', 'Api\TransaksiController@cencel');
+    Route::post('/penjualan/add/{id}', 'Api\TransaksiController@add');
+    
 });
 
 
