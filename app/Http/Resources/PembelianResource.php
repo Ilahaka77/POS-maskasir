@@ -17,6 +17,7 @@ class PembelianResource extends JsonResource
     {
         return [
             // 'tanggal' => date("D, J F Y", $this->created_at),
+            'id' => $this->id,
             'tanggal' => Carbon::parse($this->created_at)->format("l, d F Y"),
             'supplier' => $this->supplier->nama_supplier,
             'total_bayar' => $this->total_bayar
