@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                     'email' => 'superadmin@email.com',
                     'email_verified_at' => Carbon::now(),
                     'password' => Hash::make('password'),
+                    'foto_profil' => 'https://via.placeholder.com/150',
                     'role' => 'admin'
                 ],
                 [
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
                     'email' => 'staff@gmail.com',
                     'email_verified_at' => Carbon::now(),
                     'password' => Hash::make('12345678'),
+                    'foto_profil' => 'https://via.placeholder.com/150',
                     'role' => 'staff'
                 ],
                 [
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
                     'email' => 'ahmad.ilahaka7@gmail.com',
                     'email_verified_at' => null,
                     'password' => Hash::make('12345678'),
+                    'foto_profil' => 'https://via.placeholder.com/150',
                     'role' => 'staff'
                 ],
                 [
@@ -42,6 +45,7 @@ class UserSeeder extends Seeder
                     'email' => 'kasir@gmail.com',
                     'email_verified_at' => Carbon::now(),
                     'password' => Hash::make('12345678'),
+                    'foto_profil' => 'https://via.placeholder.com/150',
                     'role' => 'kasir'
                 ],
             ]
