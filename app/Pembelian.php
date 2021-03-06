@@ -17,4 +17,13 @@ class Pembelian extends Model
     {
         return $this->hasMany('App\DetailPembelian', 'pembelian_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($transaksi){
+            $transaksi->detail()->delete();
+        });
+    }
 }

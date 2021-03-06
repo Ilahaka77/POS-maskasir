@@ -54,6 +54,9 @@ class TransaksiController extends Controller
         $barang = $request->penjualan;
 
         $transaksi = [];
+        if ($request->kode_member !== null) {
+            
+        }
         foreach ($barang as $key => $value) {
             $item = Barang::find($value['barang']);
             $transaksi[$key] = DetailTransaksi::create([
