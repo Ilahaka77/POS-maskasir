@@ -43,9 +43,9 @@ class PembelianController extends Controller
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'supplier_id' => 'required',
-            'pembelian.*.barang' => 'required',
-            'pembelian.*.jumlah' => 'required'
+            'supplier' => 'required',
+            'detail.*.barang' => 'required',
+            'detail.*.jumlah' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -55,10 +55,10 @@ class PembelianController extends Controller
             ],400);
         }
         
-        $item = $request->pembelian;
+        $item = $request->detail;
         try {
             $pembelian = Pembelian::create([
-                'supplier_id' => $request->supplier_id,
+                'supplier_id' => $request->supplier,
                 'total_bayar' => 0
             ]);
 
