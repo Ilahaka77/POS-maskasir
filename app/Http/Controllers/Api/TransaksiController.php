@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Barang;
+use App\DetailPembelian;
 use App\DetailTransaksi;
 use App\Http\Controllers\Controller;
 use App\Transaksi;
@@ -54,15 +55,12 @@ class TransaksiController extends Controller
 
         try {
             $item = Barang::find($request->barang);
-            $transaksi = Transaksi::where('kode_transaksi', $id)->first();
             $detail = DetailTransaksi::create([
                 'kode_transaksi' => $id,
                 'barang_id' => $request->barang,
                 'jumlah' => $request->jumlah,
                 'harga' => $request->jumlah*$item->harga_jual
             ]);
-            $transaksi->harga_total = $transaksi->harga_total + $detail->harga;
-            $transaksi->save();
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
@@ -76,8 +74,80 @@ class TransaksiController extends Controller
         ], 200);
     }
 
-    public function getHarga(Request $request, $id){
+    public function updateItem(Request $request, $id)
+    {
+        $detail = DetailTransaksi::find($id);
+        $barang = Barang::find($detail->barang_id);
+        $detail->update([
+            'jumlah' => $request->jumlah,
+            'harga' => $request->jumlah*$barang->harga_jual
+        ]);
 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Update detail is success',
+        ], 200);
+    }
+
+    public function deleteItem($id)
+    {
+        $detail = DetailTransaksi::find($id);
+        $detail->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'deleting detail is success'
+        ], 200);
+    }
+
+    public function getHarga(Request $request, $id){
+        
+        $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
+        $transaksi = Transaksi::where('kode_transaksi', $id)->first();
+        if($request->kode_member !== null){
+            foreach ($detail as $key => $value) {
+                $barang = Barang::find($value->barang_id);
+                $update = DetailTransaksi::where('id', $value->id)->update([
+                    'harga' => $value->harga - ($value->harga * $barang->diskon)
+                ]);
+                $transaksi->harga_total = $transaksi->harga_total + $update->harga;
+            }
+            $transaksi->kode_member = $request->kode_member;
+            $transaksi->save();
+
+            return response()->json([
+                'transaksi' => $transaksi
+            ]);
+        }
+
+        return response()->json([
+            'transaksi' => $transaksi
+        ]);
+        
+    }
+
+    public function bayar(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'bayar' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->messages()->first()
+            ], 400);
+        }
+
+        $transaksi = Transaksi::where('kode_transaksi', $id)->first();
+
+        $transaksi->bayar = $request->bayar;
+        $transaksi->kembalian = $request->bayar - $transaksi->harga_total;
+        $transaksi->save();
+
+        return response()->json([
+            'kembalian' => $transaksi->kembalian
+        ], 200);
     }
 
     public function cencel($id)
