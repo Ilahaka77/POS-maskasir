@@ -28,6 +28,7 @@ class TransaksiController extends Controller
         // dd($this->getKodeTransaksi());
         $transaksi = Transaksi::create([
             'kode_transaksi' => $this->getKodeTransaksi(),
+            'harga_total' => 0,
             'kasir' => Auth::user()->id
         ]);
 
@@ -39,8 +40,8 @@ class TransaksiController extends Controller
     public function add(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'penjualan.*.barang' => 'required',
-            'penjualan.*.jumlah' => 'required',
+            'barang' => 'required',
+            'jumlah' => 'required',
         ]);
 
         if($validator->fails())
@@ -51,30 +52,31 @@ class TransaksiController extends Controller
             ],200);
         }
 
-        $barang = $request->penjualan;
-
-        $transaksi = [];
-        if ($request->kode_member !== null) {
-            
-        }
-        foreach ($barang as $key => $value) {
-            $item = Barang::find($value['barang']);
-            $transaksi[$key] = DetailTransaksi::create([
+        try {
+            $item = Barang::find($request->barang);
+            $transaksi = Transaksi::where('kode_transaksi', $id)->first();
+            $detail = DetailTransaksi::create([
                 'kode_transaksi' => $id,
-                'barang_id' => $value['barang'],
-                'jumlah' => $value['jumlah'],
-                'harga' => $item->harga_jual*$value['jumlah']
+                'barang_id' => $request->barang,
+                'jumlah' => $request->jumlah,
+                'harga' => $request->jumlah*$item->harga_jual
             ]);
+            $transaksi->harga_total = $transaksi->harga_total + $detail->harga;
+            $transaksi->save();
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage(),
+            ], 200);
         }
-
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Add item transaction is successfully',
-            'data' => $transaksi
         ], 200);
     }
 
-    public function bayar(Request $request, $id){
+    public function getHarga(Request $request, $id){
 
     }
 

@@ -21,7 +21,10 @@ Route::get('api/password/{token}', 'Api\Auth\ResetPasswordController@showResetFo
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth','verified');
 Route::get('/profil', 'HomeController@show')->name('profil')->middleware('auth', 'verified');
+Route::get('/profil/getdata/{id}', 'HomeController@getdata')->middleware('auth', 'verified');
 Route::put('/profil/editPhoto/{id}', 'HomeController@editPhoto')->middleware('auth', 'verified');
+Route::put('/profil/changePassword', 'HomeController@changePassword')->middleware('auth', 'verified');
+Route::put('/profil/edit', 'HomeController@editProfil')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');

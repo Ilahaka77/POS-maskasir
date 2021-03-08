@@ -44,6 +44,8 @@ class PembelianController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'supplier_id' => 'required',
+            'pembelian.*.barang' => 'required',
+            'pembelian.*.jumlah' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -53,72 +55,35 @@ class PembelianController extends Controller
             ],400);
         }
         
+        $item = $request->pembelian;
         try {
             $pembelian = Pembelian::create([
                 'supplier_id' => $request->supplier_id,
                 'total_bayar' => 0
             ]);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Create pembelian successfully'
-            ]);
+            foreach ($item as $key => $value) {
+                $barang = Barang::find($value['barang']);
+                $detail = DetailPembelian::create([
+                    'pembelian_id' => $pembelian->id,
+                    'barang_id' => $value['barang'],
+                    'jumlah' => $value['jumlah'],
+                    'harga' => $value['jumlah']*$barang->harga_beli
+                ]);
+                $pembelian->total_bayar = $pembelian->total_bayar + $detail->harga;
+                $pembelian->save();
+            }
+            
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 'error',
                 'message' => $th->getMessage(),
             ], 201);
         }
-    }
-
-    public function addItem(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(),[
-            'barang' => 'required',
-            'jumlah' => 'required'
-        ]);
-        $item = $request->pembelian;
-        try {
-            $barang = Barang::find($request->barang);
-            $detail= DetailPembelian::create([
-                'pembelian_id' => $id,
-                'barang_id' => $request->barang,
-                'jumlah' => $request->jumlah,
-                'harga' => $request->jumlah*$barang->harga_jual
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage()
-            ]);
-        }
-
-        $pembelian = Pembelian::find($id);
-        try {
-            $pembelian->total_bayar = $pembelian->total_bayar + $detail->harga;
-            $pembelian->save();
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage()
-            ], 400);
-        }
-
         return response()->json([
-             'status' => 'success',
-             'message' => 'successfully adding an item'
+            'pemblian' => $pembelian
         ],200);
-
     }
 
-    public function cencel($id)
-    {
-        $pembelian = Pembelian::where('id', $id)->first();
 
-        $pembelian->delete();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Pembelian is cenceled'
-        ], 200);
-    }
 }
