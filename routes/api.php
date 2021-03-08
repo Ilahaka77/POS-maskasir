@@ -69,9 +69,14 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //CRUD Penjualan
     Route::get('/penjualan', 'Api\TransaksiController@index');
-    Route::get('/penjualan/baru', 'Api\TransaksiController@newTransaksi');
-    Route::get('/penjualan/cencel/{id}', 'Api\TransaksiController@cencel');
+    Route::get('/penjualan/new', 'Api\TransaksiController@newTransaksi');
     Route::post('/penjualan/add/{id}', 'Api\TransaksiController@add');
+    Route::post('/penjualan/update/{id}', 'Api\TransaksiController@updateItem');
+    Route::delete('/penjualan/delete/{id}', 'Api\TransaksiController@deleteItem');
+    Route::post('/penjualan/harga/{id}', 'Api\TransaksiController@getHarga');
+    Route::post('/penjualan/bayar/{id}', 'Api\TransaksiController@bayar');
+    Route::delete('/penjualan/cencel/{id}', 'Api\TransaksiController@cencel');
+    Route::get('/penjualan/{id}', 'Api\TransaksiController@show');
     
 });
 

@@ -24,6 +24,12 @@ class TransaksiController extends Controller
             'data' => $transaksi
         ], 200);
     }
+
+    public function show($id)
+    {
+        $
+    }
+
     public function newTransaksi()
     {
         // dd($this->getKodeTransaksi());
