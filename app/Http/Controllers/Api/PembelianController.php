@@ -32,7 +32,7 @@ class PembelianController extends Controller
         
         $detail = DB::table('detail_pembelians')
             ->select('detail_pembelians.id', 'barangs.barcode', 'barangs.nama_barang', 'categories.kategori', 'barangs.merek', 'barangs.harga_beli', 'detail_pembelians.jumlah', 'detail_pembelians.harga')
-            ->where('pembelians_id', $id)
+            ->where('detail_pembelians.pembelians_id', $id)
             ->leftJoin('barangs', 'detail_pembelians.barang_id', '=', 'barangs.id')
             ->leftJoin('categories', 'barangs.kategori_id', '=', 'categories.id')
             ->get();
