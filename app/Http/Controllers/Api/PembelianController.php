@@ -40,49 +40,15 @@ class PembelianController extends Controller
         ], 200);
     }
 
-    public function create(Request $request)
+    public function newPembelian(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'supplier' => 'required',
-            'detail.*.barang' => 'required',
-            'detail.*.jumlah' => 'required'
+
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $validator->messages()->first()
-            ],400);
-        }
-        
-        $item = $request->detail;
-        try {
-            $pembelian = Pembelian::create([
-                'supplier_id' => $request->supplier,
-                'total_bayar' => 0
-            ]);
+        $pembelian = Pembelian::create([
 
-            foreach ($item as $key => $value) {
-                $barang = Barang::find($value['barang']);
-                $detail = DetailPembelian::create([
-                    'pembelian_id' => $pembelian->id,
-                    'barang_id' => $value['barang'],
-                    'jumlah' => $value['jumlah'],
-                    'harga' => $value['jumlah']*$barang->harga_beli
-                ]);
-                $pembelian->total_bayar = $pembelian->total_bayar + $detail->harga;
-                $pembelian->save();
-            }
-            
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $th->getMessage(),
-            ], 201);
-        }
-        return response()->json([
-            'pemblian' => $pembelian
-        ],200);
+        ]);
     }
 
 

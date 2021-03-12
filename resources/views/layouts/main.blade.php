@@ -115,15 +115,16 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         
-                        <li class="active">
+                        <li class="{{ ($menu == 'dashboard')?'active':'' }}">
                             <a href="{{ route('home') }}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
+                        
                         @if (Auth::user()->role == 'admin')
-                        <li class="">
-                            <a href="#">
+                        <li class="{{ ($menu == 'staff')?'active':'' }}">
+                            <a href="{{ route('staff') }}">
                                 <i class="fas fa-user"></i>Staff Toko</a>
-                            </li>
+                        </li>
                             
                         @endif
                         <li class="">

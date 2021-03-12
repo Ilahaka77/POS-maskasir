@@ -18,7 +18,7 @@ class TransaksiController extends Controller
 
     public function index()
     {
-        $transaksi = Transaksi::all();
+        $transaksi = Transaksi::get();
 
         return response()->json([
             'data' => $transaksi
@@ -117,22 +117,25 @@ class TransaksiController extends Controller
 
     public function getHarga(Request $request, $id){
         
-        $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
-        $transaksi = Transaksi::where('kode_transaksi', $id)->first();
         if($request->kode_member !== null){
-            foreach ($detail as $key => $value) {
-                $barang = Barang::find($value->barang_id);
-                $update = DetailTransaksi::where('id', $value->id)->update([
-                    'harga' => $value->harga - ($value->harga * $barang->diskon)
-                ]);
-                $transaksi->harga_total = $transaksi->harga_total + $update->harga;
-            }
-            $transaksi->kode_member = $request->kode_member;
-            $transaksi->save();
 
-            return response()->json([
-                'transaksi' => $transaksi
-            ]);
+            $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
+            $transaksi = Transaksi::where('kode_transaksi', $id)->first();
+            if($request->kode_member !== null){
+                foreach ($detail as $key => $value) {
+                    $barang = Barang::find($value->barang_id);
+                    $update = DetailTransaksi::where('id', $value->id)->update([
+                        'harga' => $value->harga - ($value->harga * $barang->diskon)
+                    ]);
+                    $transaksi->harga_total = $transaksi->harga_total + $update->harga;
+                }
+                $transaksi->kode_member = $request->kode_member;
+                $transaksi->save();
+    
+                return response()->json([
+                    'transaksi' => $transaksi
+                ]);
+            }
         }
 
         return response()->json([
