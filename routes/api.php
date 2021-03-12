@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/pengeluaran/{id}', 'Api\PengeluaranController@update');
 
     //CRUD Pembelian
-    Route::get('/pembelian', 'Api\PembelianController@inex');
+    Route::get('/pembelian', 'Api\PembelianController@index');
     Route::post('/pembelian/new', 'Api\PembelianController@newPembelian');
     Route::get('/pembelian/{id}', 'Api\PembelianController@show');
     Route::post('/pembelian/add/{id}', 'Api\PembelianController@addItem');
