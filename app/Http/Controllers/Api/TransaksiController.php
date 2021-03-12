@@ -29,7 +29,7 @@ class TransaksiController extends Controller
     {
         $transaksi = DB::table('transaksis')->select('kode_transaksi', 'created_at as tanggal','kasir')->where('kode_transaksi', $id)->first();
         $detail = DB::table('detail_transaksis')
-            ->select('detail_transaksis.id', 'kode_transaksi', 'barangs.nama_barang', 'detail_transaksis.jumlah', 'barangs.harga_jual', 'detail_transaksis.harga')
+            ->select('detail_transaksis.id', 'barangs.barcode', 'barangs.nama_barang', 'categories.kategori', 'barangs.merek', 'barangs.harga_jual', 'detail_transaksis.jumlah', 'barangs.harga_jual', 'detail_transaksis.harga')
             ->where('detail_transaksis.kode_transaksi', '=' , $id)
             ->leftJoin('barangs', 'detail_transaksis.barang_id', '=', 'barangs.id')->get();
 
