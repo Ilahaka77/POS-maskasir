@@ -26,6 +26,9 @@ Route::put('/profil/editPhoto/{id}', 'HomeController@editPhoto')->middleware('au
 Route::put('/profil/changePassword', 'HomeController@changePassword')->middleware('auth', 'verified');
 Route::put('/profil/edit', 'HomeController@editProfil')->middleware('auth', 'verified');
 
+// Route Menu CRUD Staff
+Route::get('/staff', 'StaffController@index')->name('staff')->middleware('auth', 'verified');
+
 Route::get('/notifrole', function () {
     return view('notifrole');
 });

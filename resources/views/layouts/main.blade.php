@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>@yield('title')</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ url('css/font-face.css') }}" rel="stylesheet" media="all">
@@ -57,13 +57,13 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="active">
+                        <li class="{{ ($menu == 'dashboard')?'active':'' }}">
                             <a href="{{ route('home') }}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-user"></i>Staff</a>
+                        <li class="{{ ($menu == 'staff')?'active':'' }}">
+                            <a href="{{ route('staff') }}">
+                                <i class="fas fa-user"></i>Staff Toko</a>
                         </li>
                         <li class="">
                             <a href="#">

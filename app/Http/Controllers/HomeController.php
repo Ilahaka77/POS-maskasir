@@ -28,13 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', ['menu' => 'dashboard']);
     }
 
     public function show(){
         $data = User::find(Auth::user()->id);
         // dd($data);
-        return view('profil', compact('data'));
+        return view('profil', ['menu' => 'dashboard', 'data'=>$data]);
     }
 
     public function editPhoto(Request $request, $id){
