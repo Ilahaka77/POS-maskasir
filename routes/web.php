@@ -28,6 +28,7 @@ Route::put('/profil/edit', 'HomeController@editProfil')->middleware('auth', 'ver
 
 // Route Menu CRUD Staff
 Route::get('/staff', 'StaffController@index')->name('staff')->middleware('auth', 'verified');
+Route::get('/staff/getdata/{id}', 'StaffController@getData')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');

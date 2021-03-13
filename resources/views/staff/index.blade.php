@@ -18,7 +18,7 @@
                     <div class="au-card recent-report">
                         <div>
                             <h3 class="title-2">recent reports</h3>
-                            <button class="btn btn-primary" style="float: right"><i class="fas fa-plus"></i> Tambah</button>
+                            <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Tambah</button>
                         </div>
                         <div class="mt-5">
                             <table class="table mt-3">
@@ -31,17 +31,19 @@
                                         <th scope="col"></th>
                                     </tr>
                                     <tbody>
+                                        @foreach ($staff as $item)
                                         <tr>
-                                            <td scope="row">No.</td>
-                                            <td>Nama</td>
-                                            <td>Email</td>
-                                            <td>Role</td>
-                                            <td>
-                                                <a href="" class="btn btn-primary"><i class="fas fa-info"></i> Detail</a>
-                                                <a href="" class="btn btn-primary"><i class="fas fa-pencil"></i> Edit</a>
-                                                <a href="" class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                            <td scope="row">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->role }}</td>
+                                            <td style="width: 200px">
+                                                <button class="btn btn-primary btnDetail" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#detail"><i class="fas fa-info"></i></button>
+                                                <button class="btn btn-primary btnEdit" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#update"><i class="fas fa-pen"></i></button>
+                                                <button class="btn btn-danger"  style="width: 40px; font-size:12px;"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </thead>
                             </table>
@@ -59,4 +61,295 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Create --}}
+<div class="modal fade" id="create" tabindex="-1" aria-labelledby="createLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createLabel">Tambah Staff</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ url('staff') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <div class="mx-auto d-flex justify-content-center">
+                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
+                    </div>
+                    <hr>
+                    <div class="card-text text-sm-center">
+                        <input type="file" name="foto_profil" id="foto_profil" style="display: none">
+                        <label for="foto_profil" class="btn btn-outline-primary">Pilih Foto</label>
+                        @error('foto_profil')
+                            <span style="display: block">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Nama</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="email" name="email" id="email" value="{{ old('email') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="password" name="password" id="password" value="{{ old('password') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" value="{{ old('password_confirmation') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}">
+                    </div>
+                </div>
+                <div class="form-group row" >
+                    <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5">{{ old('alamat') }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="role" class="col-sm-3 col-form-label">Role</label>
+                    <div class="col-sm-9">
+                        <select name="role" id="role" class="form-control">
+                            <option value="">-- Pilih Role --</option>
+                            <option value="pimpinan">Pimpinan</option>
+                            <option value="staff">Staff</option>
+                            <option value="kasir">Kasir</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+      </div>
+    </div>
+</div>
+
+{{-- Modal Update --}}
+<div class="modal fade" id="update" tabindex="-1" aria-labelledby="updateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateLabel">Edit Staff</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="POST" id="formEdit">
+                @csrf
+                @method('put')
+                <div class="form-group">
+                    <div class="mx-auto d-flex justify-content-center">
+                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
+                    </div>
+                    <hr>
+                    <div class="card-text text-sm-center">
+                        <input type="file" name="foto_profil" id="foto_profil" style="display: none">
+                        <label for="foto_profil" class="btn btn-outline-primary">Pilih Foto</label>
+                        @error('foto_profil')
+                            <span style="display: block">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Nama</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="name" id="name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="email" name="email" id="email">
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="date" name="tgl_lahir" id="edit_tanggal">
+                    </div>
+                </div>
+                <div class="form-group row" >
+                    <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="role" class="col-sm-3 col-form-label">Role</label>
+                    <div class="col-sm-9">
+                        <select name="role" id="role" class="form-control">
+                            <option value="">-- Pilih Role --</option>
+                            <option value="pimpinan">Pimpinan</option>
+                            <option value="staff">Staff</option>
+                            <option value="kasir">Kasir</option>
+                        </select>
+                    </div>
+                </div>
+                <small>*Silahkan isi field password untuk merubah password</small>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="password" name="password" id="password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="password" name="password_confirmation" id="password_confirmation">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+            </form>
+      </div>
+    </div>
+</div>
+
+{{-- Modal Detail --}}
+<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailLabel">Detail Staff</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="mx-auto d-flex justify-content-center">
+                <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
+            </div>
+            <hr>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td scope="col">Nama</td>
+                        <td scope="col" id="detailName"></td>
+                    </tr>
+                    <tr>
+                        <td scope="col">Role</td>
+                        <td scope="col" id="detailRole"></td>
+                    </tr>
+                    <tr>
+                        <td scope="col">Email</td>
+                        <td scope="col" id="detailEmail"></td>
+                    </tr><tr>
+                        <td scope="col">Umur</td>
+                        <td scope="col" id="detailUmur"></td>
+                    </tr>
+                    <tr>
+                        <td scope="col">Tgl. Lahir</td>
+                        <td scope="col" id="detailTgl"></td>
+                    </tr>
+                    <tr>
+                        <td scope="col">Alamat</td>
+                        <td scope="col" id="detailAlamat"></td>
+                    </tr>
+                </tbody>
+            </table>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            
+            // Display image
+            $('#foto_profil').change(function(){
+                const file = this.files[0];
+
+                if(file){
+                    const reader = new FileReader();
+
+                    reader.addEventListener("load", function(){
+                        document.getElementById('display').setAttribute('src', this.result);
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Get Data for Form Update
+            $('.btnEdit').on('click', function(){
+                const id = $(this).data('id');
+                $('#formEdit').attr('action', `{{ url('staff/${id}/edit') }}`);
+                $.ajax({
+                    url:`{{ url('staff/getdata/${id}') }}`,
+                    method:'get',
+                    dataType:'json',
+                    success:function(data){
+                        console.log(data);
+                        $('#formEdit img').attr('src', data.foto_profil);
+                        $('#formEdit #name').val(data.name);
+                        $('#formEdit #email').val(data.email);
+                        $('#formEdit #edit_tanggal').val(data.tgl_lahir);
+                        $('#formEdit #alamat').val(data.alamat);
+                    }
+                });
+            });
+
+            //Get Data for Detail 
+            $('.btnDetail').on('click', function(){
+                const id = $(this).data('id');
+                $.ajax({
+                    url:`{{ url('staff/getdata/${id}') }}`,
+                    method:'get',
+                    dataType:'json',
+                    success:function(data){
+                        console.log(data);
+                        dob = new Date(data.tgl_lahir);
+                        var today = new Date();
+                        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+                        $('#detail img').attr('src', data.foto_profil);
+                        $('#detail #detailName').text(data.name);
+                        $('#detail #detailRole').text(data.role);
+                        $('#detail #detailEmail').text(data.email);
+                        if (data.tgl_lahir == null) {
+                            $('#detail #detailTgl').text('-');
+                            $('#detail #detailUmur').text('-');
+                        } else {
+                            $('#detail #detailTgl').text(data.tgl_lahir);
+                            $('#detail #detailUmur').text(age);
+                        }
+                        (data.alamat !== null)?$('#detail #detailAlamat').text(data.alamat):$('#detail #detailAlamat').text('-');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
