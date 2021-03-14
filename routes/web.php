@@ -28,7 +28,14 @@ Route::put('/profil/edit', 'HomeController@editProfil')->middleware('auth', 'ver
 
 // Route Menu CRUD Staff
 Route::get('/staff', 'StaffController@index')->name('staff')->middleware('auth', 'verified');
+Route::post('/staff', 'StaffController@store')->name('staff.create')->middleware('auth', 'verified');
 Route::get('/staff/getdata/{id}', 'StaffController@getData')->middleware('auth', 'verified');
+Route::put('/staff/{id}/edit', 'StaffController@update')->middleware('auth', 'verified');
+
+// Route Menu Crud Member
+Route::get('/member', 'MemberController@index')->name('member')->middleware('auth', 'verified');
+Route::post('/member', 'MemberController@create')->name('member.create')->middleware('auth', 'verified');
+Route::get('/member/getdata/{id}', 'MemberController@show')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');

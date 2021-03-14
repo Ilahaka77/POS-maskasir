@@ -31,7 +31,8 @@ class TransaksiController extends Controller
         $detail = DB::table('detail_transaksis')
             ->select('detail_transaksis.id', 'barangs.barcode', 'barangs.nama_barang', 'categories.kategori', 'barangs.merek', 'barangs.harga_jual', 'detail_transaksis.jumlah', 'barangs.harga_jual', 'detail_transaksis.harga')
             ->where('detail_transaksis.kode_transaksi', '=' , $id)
-            ->leftJoin('barangs', 'detail_transaksis.barang_id', '=', 'barangs.id')->get();
+            ->leftJoin('barangs', 'detail_transaksis.barang_id', '=', 'barangs.id')
+            ->leftJoin('categories', 'barangs.kategori_id', '=', 'categories.id')->get();
 
         return response()->json([
             'transaksi' => $transaksi,

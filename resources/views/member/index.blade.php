@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Staff')
+@section('title', 'Member')
 
 @section('content')
 <div class="main-content">
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="overview-wrap">
-                        <h2 class="title-1">Staff</h2>
+                        <h2 class="title-1">Member</h2>
                     </div>
                 </div>
             </div>
@@ -40,20 +40,20 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
+                                        <th scope="col">Kode Member</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Role</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
     
-                                    @foreach ($staff as $key => $item)
+                                    @foreach ($member as $key => $item)
                                     <tr>
                                         <td scope="row">{{ $loop->iteration }}</td>
+                                        <td style="width: 200px">{{ $item->kode_member }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->role }}</td>
                                         <td style="width: 200px">
                                             <button class="btn btn-primary btnDetail" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#detail"><i class="fas fa-info"></i></button>
                                             <button class="btn btn-primary btnEdit" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#update"><i class="fas fa-pen"></i></button>
@@ -83,13 +83,13 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createLabel">Tambah Staff</h5>
+          <h5 class="modal-title" id="createLabel">Tambah Member</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ url('staff') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('member') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <div class="mx-auto d-flex justify-content-center">
@@ -142,17 +142,6 @@
                         <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5">{{ old('alamat') }}</textarea>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="role" class="col-sm-3 col-form-label">Role</label>
-                    <div class="col-sm-9">
-                        <select name="role" id="role" class="form-control">
-                            <option value="">-- Pilih Role --</option>
-                            <option value="pimpinan">Pimpinan</option>
-                            <option value="staff">Staff</option>
-                            <option value="kasir">Kasir</option>
-                        </select>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -168,7 +157,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateLabel">Edit Staff</h5>
+          <h5 class="modal-title" id="updateLabel">Edit Member</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -217,17 +206,6 @@
                         <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5"></textarea>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="role" class="col-sm-3 col-form-label">Role</label>
-                    <div class="col-sm-9">
-                        <select name="role" id="role" class="form-control">
-                            <option value="">-- Pilih Role --</option>
-                            <option value="pimpinan">Pimpinan</option>
-                            <option value="staff">Staff</option>
-                            <option value="kasir">Kasir</option>
-                        </select>
-                    </div>
-                </div>
                 <small>*Silahkan isi field password untuk merubah password</small>
                 <div class="form-group row">
                     <label for="password" class="col-sm-3 col-form-label">Password</label>
@@ -269,12 +247,12 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td scope="col">Nama</td>
-                        <td scope="col" id="detailName"></td>
+                        <td scope="col">Kode Member</td>
+                        <td scope="col" id="detailKode"></td>
                     </tr>
                     <tr>
-                        <td scope="col">Role</td>
-                        <td scope="col" id="detailRole"></td>
+                        <td scope="col">Nama</td>
+                        <td scope="col" id="detailName"></td>
                     </tr>
                     <tr>
                         <td scope="col">Email</td>
@@ -325,7 +303,7 @@
                 const id = $(this).data('id');
                 $('#formEdit').attr('action', `{{ url('staff/${id}/edit') }}`);
                 $.ajax({
-                    url:`{{ url('staff/getdata/${id}') }}`,
+                    url:`{{ url('member/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
@@ -344,7 +322,7 @@
             $('.btnDetail').on('click', function(){
                 const id = $(this).data('id');
                 $.ajax({
-                    url:`{{ url('staff/getdata/${id}') }}`,
+                    url:`{{ url('member/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
@@ -354,6 +332,7 @@
                         var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
                         $('#detail img').attr('src', data.foto_profil);
                         $('#detail #detailName').text(data.name);
+                        $('#detail #detailKode').text(data.kode_member);
                         $('#detail #detailRole').text(data.role);
                         $('#detail #detailEmail').text(data.email);
                         if (data.tgl_lahir == null) {

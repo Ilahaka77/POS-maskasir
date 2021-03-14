@@ -127,8 +127,8 @@
                         </li>
                             
                         @endif
-                        <li class="">
-                            <a href="#">
+                        <li class="{{ ($menu == 'staff')?'active':'' }}">
+                            <a href="{{ url('/member') }}">
                                 <i class="fas fa-users"></i>Member</a>
                         </li>
                         <li class="">
@@ -247,6 +247,11 @@
     <script src="{{ url('vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ url('vendor/chartjs/Chart.bundle.min.js') }}"></script>
     <script src="{{ url('vendor/select2/select2.min.js') }}">
+    <script src="{{ url('vendor/vector-map/jquery.vmap.js')}}"></script>
+    <script src="{{ url('vendor/vector-map/jquery.vmap.min.js')}}"></script>
+    <script src="{{ url('vendor/vector-map/jquery.vmap.sampledata.js')}}"></script>
+    <script src="{{ url('vendor/vector-map/jquery.vmap.world.js')}}"></script>
+    <script src="{{ url('vendor/DataTables/datatables.min.js') }}"></script>
     </script>
 
     <!-- Main JS-->
