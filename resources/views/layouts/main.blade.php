@@ -127,17 +127,13 @@
                         </li>
                             
                         @endif
-                        <li class="{{ ($menu == 'staff')?'active':'' }}">
+                        <li class="{{ ($menu == 'member')?'active':'' }}">
                             <a href="{{ url('/member') }}">
                                 <i class="fas fa-users"></i>Member</a>
                         </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fa fa-cash-register"></i>Kasir</a>
-                        </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-truck"></i>Supplier</a>
+                        <li class="{{ ($menu == 'supplier')?'active':'' }}">
+                            <a href="{{ url('/supplier') }}">
+                                <i class="fas fa-users"></i>Supplier</a>
                         </li>
                         <li class="">
                             <a href="#">

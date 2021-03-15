@@ -36,6 +36,10 @@ Route::put('/staff/{id}/edit', 'StaffController@update')->middleware('auth', 've
 Route::get('/member', 'MemberController@index')->name('member')->middleware('auth', 'verified');
 Route::post('/member', 'MemberController@create')->name('member.create')->middleware('auth', 'verified');
 Route::get('/member/getdata/{id}', 'MemberController@show')->middleware('auth', 'verified');
+Route::put('/member/{id}/edit', 'MemberController@update')->middleware('auth', 'verified');
+
+//Route Menu CRUD Supplier
+Route::get('/supplier', 'SupplierController@index')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');

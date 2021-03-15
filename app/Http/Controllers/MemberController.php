@@ -67,6 +67,34 @@ class MemberController extends Controller
         return redirect('/member')->with('satus', 'Berhasil menambahkan member');
     }
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required',
+            'tgl_lahir' => 'required',
+            'alamat' => 'required' 
+        ]);
+
+        if($validator->fails()){
+            return redirect('/member')->with('error', $validator->messages()->first());
+        }
+
+        $user = User::find($id);
+        try {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->tgl_lahir = $request->tgl_lahir;
+            $user->alamat = $request->alamat;
+            $user->foto_profil = ($request->foto_profil == null)?$user->foto_profil:$this->uploadFoto($request->foto_profil);
+            $user->save();
+        } catch (\Throwable $th) {
+            return redirect('/member')->with('error', $th->getMessage());
+        }
+
+        return redirect('/member')->with('status', 'Edit Member berhasil');
+    }
+
     public function getKodeMember(){
         $year = date("Y");
         $data = count(DB::table('members')->whereYear('created_at', $year)->get());

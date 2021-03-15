@@ -125,7 +125,8 @@ class TransaksiController extends Controller
             if($request->kode_member !== null){
                 foreach ($detail as $key => $value) {
                     $barang = Barang::find($value->barang_id);
-                    $update = DetailTransaksi::where('id', $value->id)->update([
+                    $update = DetailTransaksi::where('id', $value->id)->first();
+                    $update->update([
                         'harga' => $value->harga - ($value->harga * $barang->diskon)
                     ]);
                     $transaksi->harga_total = $transaksi->harga_total + $update->harga;

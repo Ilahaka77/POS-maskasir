@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Member')
+@section('title', 'Supplier')
 
 @section('content')
 <div class="main-content">
@@ -40,20 +40,16 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
-                                        <th scope="col">Kode Member</th>
-                                        <th scope="col">Nama</th>
-                                        <th scope="col">Email</th>
+                                        <th scope="col">Nama Supplier</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
     
-                                    @foreach ($member as $key => $item)
+                                    @foreach ($supplier as $key => $item)
                                     <tr>
                                         <td scope="row">{{ $loop->iteration }}</td>
-                                        <td style="width: 200px">{{ $item->kode_member }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->nama_supplier }}</td>
                                         <td style="width: 200px">
                                             <button class="btn btn-primary btnDetail" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#detail"><i class="fas fa-info"></i></button>
                                             <button class="btn btn-primary btnEdit" style="width: 40px; font-size:12px;" data-id="{{ $item->id }}" data-toggle="modal" data-target="#update"><i class="fas fa-pen"></i></button>
@@ -91,49 +87,11 @@
         <div class="modal-body">
             <form action="{{ url('member') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-group">
-                    <div class="mx-auto d-flex justify-content-center">
-                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
-                    </div>
-                    <hr>
-                    <div class="card-text text-sm-center">
-                        <input type="file" name="foto_profil" id="foto_profil" style="display: none">
-                        <label for="foto_profil" class="btn btn-outline-primary">Pilih Foto</label>
-                        @error('foto_profil')
-                            <span style="display: block">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
+                
                 <div class="form-group row">
                     <label for="name" class="col-sm-3 col-form-label">Nama</label>
                     <div class="col-sm-9">
                         <input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="email" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="email" name="email" id="email" value="{{ old('email') }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="password" class="col-sm-3 col-form-label">Password</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="password" name="password" id="password" value="{{ old('password') }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="password_confirmation" class="col-sm-3 col-form-label">Confirm Password</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" value="{{ old('password_confirmation') }}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}">
                     </div>
                 </div>
                 <div class="form-group row" >
@@ -166,38 +124,10 @@
             <form action="" method="POST" id="formEdit" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-                <div class="form-group">
-                    <div class="mx-auto d-flex justify-content-center">
-                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display_edit"  style="width: 150px; height:150px;">
-                    </div>
-                    <hr>
-                    <div class="card-text text-sm-center">
-                        <input type="file" name="foto_profil" id="foto_profil_edit" style="display: none">
-                        <label for="foto_profil_edit" class="btn btn-outline-primary">Pilih Foto</label>
-                        @error('foto_profil')
-                            <span style="display: block">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
                 <div class="form-group row">
                     <label for="name" class="col-sm-3 col-form-label">Nama</label>
                     <div class="col-sm-9">
                         <input class="form-control" type="text" name="name" id="name">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="email" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="email" name="email" id="email">
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <label for="tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="date" name="tgl_lahir" id="edit_tanggal">
                     </div>
                 </div>
                 <div class="form-group row" >
@@ -236,21 +166,6 @@
                     <tr>
                         <td style="width: 150px">Kode Member</td>
                         <td scope="col" id="detailKode"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Nama</td>
-                        <td scope="col" id="detailName"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Email</td>
-                        <td scope="col" id="detailEmail"></td>
-                    </tr><tr>
-                        <td style="width: 150px">Umur</td>
-                        <td scope="col" id="detailUmur"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Tgl. Lahir</td>
-                        <td scope="col" id="detailTgl"></td>
                     </tr>
                     <tr>
                         <td style="width: 150px">Alamat</td>

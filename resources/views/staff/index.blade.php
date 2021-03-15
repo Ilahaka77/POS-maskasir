@@ -179,12 +179,12 @@
                 @method('put')
                 <div class="form-group">
                     <div class="mx-auto d-flex justify-content-center">
-                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
+                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display_edit"  style="width: 150px; height:150px;">
                     </div>
                     <hr>
                     <div class="card-text text-sm-center">
-                        <input type="file" name="foto_profil" id="foto_profil" style="display: none">
-                        <label for="foto_profil" class="btn btn-outline-primary">Pilih Foto</label>
+                        <input type="file" name="foto_profil" id="foto_profil_edit" style="display: none">
+                        <label for="foto_profil_edit" class="btn btn-outline-primary">Pilih Foto</label>
                         @error('foto_profil')
                             <span style="display: block">
                                 <strong>{{ $message }}</strong>
@@ -314,6 +314,19 @@
 
                     reader.addEventListener("load", function(){
                         document.getElementById('display').setAttribute('src', this.result);
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            $('#foto_profil_edit').change(function(){
+                const file = this.files[0];
+
+                if(file){
+                    const reader = new FileReader();
+
+                    reader.addEventListener("load", function(){
+                        document.getElementById('display_edit').setAttribute('src', this.result);
                     });
                     
                     reader.readAsDataURL(file);
