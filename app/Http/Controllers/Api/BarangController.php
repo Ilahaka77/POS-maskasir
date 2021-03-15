@@ -36,6 +36,7 @@ class BarangController extends Controller
             'kategori' => 'required',
             'merek' => 'required',
             'stok' => 'required',
+            'diskon' => 'max:100',
             'harga_beli' => 'required',
             'harga_jual' => 'required'
         ]);
@@ -85,7 +86,7 @@ class BarangController extends Controller
             'kategori' => 'required',
             'merek' => 'required',
             'stok' => 'required',
-            'diskon' => 'required',
+            'diskon' => 'required|max:100',
             'harga_beli' => 'required',
             'harga_jual' => 'required' 
         ]);

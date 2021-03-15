@@ -20,7 +20,7 @@ class CreateBarangsTable extends Migration
             $table->foreignId('kategori_id')->constrained('categories');
             $table->string('merek');
             $table->integer('stok');
-            $table->decimal('diskon');
+            $table->integer('diskon');
             $table->integer('harga_beli');
             $table->integer('harga_jual');
             $table->timestamps();
