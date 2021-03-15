@@ -126,8 +126,8 @@ class TransaksiController extends Controller
                 foreach ($detail as $key => $value) {
                     $barang = Barang::find($value->barang_id);
                     $update = DetailTransaksi::where('id', $value->id)->first();
-                    $harga = $value->harga;
-                    dd( ($harga * floatval($barang->diskon)));
+                    $harga = $barang->harga_jual - ($barang->harga_jual*($barang->diskon/100));
+                    dd($harga);
                     $update->update([
                         'harga' => $value->harga - ($value->harga * floatval($barang->diskon))
                     ]);
