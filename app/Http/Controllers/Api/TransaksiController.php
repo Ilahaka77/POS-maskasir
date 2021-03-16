@@ -69,8 +69,14 @@ class TransaksiController extends Controller
             ],200);
         }
 
+        $item = Barang::find($request->barang);
+        if($item->stok < $request->jumlah){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Stok barang tidak mencukupi'
+            ], 400);
+        }
         try {
-            $item = Barang::find($request->barang);
             $detail = DetailTransaksi::create([
                 'kode_transaksi' => $id,
                 'barang_id' => $request->barang,
@@ -118,29 +124,27 @@ class TransaksiController extends Controller
 
     public function getHarga(Request $request, $id){
         
+        $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
+        $transaksi = Transaksi::where('kode_transaksi', $id)->first();
         if($request->kode_member !== null){
-
-            $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
-            $transaksi = Transaksi::where('kode_transaksi', $id)->first();
-            if($request->kode_member !== null){
-                foreach ($detail as $key => $value) {
-                    $barang = Barang::find($value->barang_id);
-                    $update = DetailTransaksi::where('id', $value->id)->first();
-                    $harga = $barang->harga_jual - ($barang->harga_jual*($barang->diskon/100));
-                    // dd($harga);
-                    $update->update([
-                        'harga' => $harga * $update->jumlah,
-                    ]);
-                    $transaksi->harga_total = $transaksi->harga_total + $update->harga;
-                }
-                $transaksi->kode_member = $request->kode_member;
-                $transaksi->save();
-    
-                return response()->json([
-                    'transaksi' => $transaksi
+            foreach ($detail as $key => $value) {
+                $barang = Barang::find($value->barang_id);
+                $update = DetailTransaksi::where('id', $value->id)->first();
+                $harga = $barang->harga_jual - ($barang->harga_jual*($barang->diskon/100));
+                // dd($harga);
+                $update->update([
+                    'harga' => $harga * $update->jumlah,
                 ]);
+                $transaksi->harga_total = $transaksi->harga_total + $update->harga;
             }
+            $transaksi->kode_member = $request->kode_member;
+            $transaksi->save();
+
+            return response()->json([
+                'transaksi' => $transaksi
+            ]);
         }
+        
 
         return response()->json([
             'transaksi' => $transaksi
@@ -162,10 +166,16 @@ class TransaksiController extends Controller
         }
 
         $transaksi = Transaksi::where('kode_transaksi', $id)->first();
+        $detail = DetailTransaksi::where('kode_transaksi', $id)->get();
 
         $transaksi->bayar = $request->bayar;
         $transaksi->kembalian = $request->bayar - $transaksi->harga_total;
         $transaksi->save();
+        foreach ($detail as $key => $value) {
+            $barang = Barang::find($value->barang_id);
+            $barang->stok = $barang->stok - $value->jumlah;
+            $barang->save();
+        }
 
         return response()->json([
             'kembalian' => $transaksi->kembalian

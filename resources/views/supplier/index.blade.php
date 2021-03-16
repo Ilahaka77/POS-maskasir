@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="overview-wrap">
-                        <h2 class="title-1">Member</h2>
+                        <h2 class="title-1">Supplier</h2>
                     </div>
                 </div>
             </div>
@@ -79,19 +79,25 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createLabel">Tambah Member</h5>
+          <h5 class="modal-title" id="createLabel">Tambah Supplier</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ url('member') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('supplier') }}" method="POST">
                 @csrf
                 
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Nama</label>
+                    <label for="name" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
                         <input class="form-control" type="text" name="name" id="name" value="{{ old('name') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="no_telepon" class="col-sm-3 col-form-label">No. Telepon</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="no_telepon" id="no_telepon" value="{{ old('no_telepon') }}">
                     </div>
                 </div>
                 <div class="form-group row" >
@@ -115,19 +121,25 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateLabel">Edit Member</h5>
+          <h5 class="modal-title" id="updateLabel">Edit Supplier</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form action="" method="POST" id="formEdit" enctype="multipart/form-data">
+            <form action="" method="POST" id="formEdit" >
                 @csrf
                 @method('put')
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Nama</label>
+                    <label for="name" class="col-sm-3 col-form-label">Nama Supplier</label>
                     <div class="col-sm-9">
                         <input class="form-control" type="text" name="name" id="name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="no_telepon" class="col-sm-3 col-form-label">No. Telepon</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="no_telepon" id="no_telepon">
                     </div>
                 </div>
                 <div class="form-group row" >
@@ -151,21 +163,21 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="detailLabel">Detail Member</h5>
+          <h5 class="modal-title" id="detailLabel">Detail Supplier</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <div class="mx-auto d-flex justify-content-center">
-                <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
-            </div>
-            <hr>
             <table class="table">
                 <tbody>
                     <tr>
-                        <td style="width: 150px">Kode Member</td>
-                        <td scope="col" id="detailKode"></td>
+                        <td style="width: 150px">Nama Supplier</td>
+                        <td scope="col" id="detailName"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 150px">No. Telepon</td>
+                        <td scope="col" id="detailTelepon"></td>
                     </tr>
                     <tr>
                         <td style="width: 150px">Alamat</td>
@@ -185,48 +197,19 @@
     <script>
         $(document).ready(function(){
             var table = $('#table_id').DataTable();
-            // Display image
-            $('#foto_profil').change(function(){
-                const file = this.files[0];
-
-                if(file){
-                    const reader = new FileReader();
-
-                    reader.addEventListener("load", function(){
-                        document.getElementById('display').setAttribute('src', this.result);
-                    });
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
-            $('#foto_profil_edit').change(function(){
-                const file = this.files[0];
-
-                if(file){
-                    const reader = new FileReader();
-
-                    reader.addEventListener("load", function(){
-                        document.getElementById('display_edit').setAttribute('src', this.result);
-                    });
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
 
             // Get Data for Form Update
             $('.btnEdit').on('click', function(){
                 const id = $(this).data('id');
-                $('#formEdit').attr('action', `{{ url('member/${id}/edit') }}`);
+                $('#formEdit').attr('action', `{{ url('supplier/${id}/edit') }}`);
                 $.ajax({
-                    url:`{{ url('member/getdata/${id}') }}`,
+                    url:`{{ url('supplier/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
                         console.log(data);
-                        $('#formEdit img').attr('src', data.foto_profil);
-                        $('#formEdit #name').val(data.name);
-                        $('#formEdit #email').val(data.email);
-                        $('#formEdit #edit_tanggal').val(data.tgl_lahir);
+                        $('#formEdit #name').val(data.nama_supplier);
+                        $('#formEdit #no_telepon').val(data.no_telepon);
                         $('#formEdit #alamat').val(data.alamat);
                     }
                 });
@@ -236,27 +219,14 @@
             $('.btnDetail').on('click', function(){
                 const id = $(this).data('id');
                 $.ajax({
-                    url:`{{ url('member/getdata/${id}') }}`,
+                    url:`{{ url('supplier/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
                         console.log(data);
-                        dob = new Date(data.tgl_lahir);
-                        var today = new Date();
-                        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-                        $('#detail img').attr('src', data.foto_profil);
-                        $('#detail #detailName').text(data.name);
-                        $('#detail #detailKode').text(data.kode_member);
-                        $('#detail #detailRole').text(data.role);
-                        $('#detail #detailEmail').text(data.email);
-                        if (data.tgl_lahir == null) {
-                            $('#detail #detailTgl').text('-');
-                            $('#detail #detailUmur').text('-');
-                        } else {
-                            $('#detail #detailTgl').text(data.tgl_lahir);
-                            $('#detail #detailUmur').text(age);
-                        }
-                        (data.alamat !== null)?$('#detail #detailAlamat').text(data.alamat):$('#detail #detailAlamat').text('-');
+                        $('#detail #detailName').text(data.nama_supplier);
+                        $('#detail #detailTelepon').text(data.no_telepon);
+                        $('#detail #detailAlamat').text(data.alamat);
                     
                     }
                 });

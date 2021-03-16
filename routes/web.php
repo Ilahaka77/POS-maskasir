@@ -40,6 +40,9 @@ Route::put('/member/{id}/edit', 'MemberController@update')->middleware('auth', '
 
 //Route Menu CRUD Supplier
 Route::get('/supplier', 'SupplierController@index')->middleware('auth', 'verified');
+Route::post('/supplier', 'SupplierController@create')->middleware('auth', 'verified');
+Route::get('/supplier/getdata/{id}', 'SupplierController@getData')->middleware('auth', 'verified');
+Route::put('/supplier/{id}/edit', 'SupplierController@update')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');
