@@ -44,6 +44,11 @@ Route::post('/supplier', 'SupplierController@create')->middleware('auth', 'verif
 Route::get('/supplier/getdata/{id}', 'SupplierController@getData')->middleware('auth', 'verified');
 Route::put('/supplier/{id}/edit', 'SupplierController@update')->middleware('auth', 'verified');
 
+//Route Menu CRUD Barang
+Route::get('/barang', 'BarangController@index')->middleware('auth', 'verified');
+Route::post('/barang', 'BarangController@create')->middleware('auth', 'verified');
+Route::get('/barang/getdata/{id}', 'BarangController@getData')->middleware('auth', 'verified');
+
 Route::get('/notifrole', function () {
     return view('notifrole');
 });

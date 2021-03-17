@@ -87,14 +87,20 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createLabel">Tambah Member</h5>
+          <h5 class="modal-title" id="createLabel">Tambah Barang</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ url('member') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('barang') }}" method="POST">
                 @csrf
+                <div class="form-group row">
+                    <label for="barcode" class="col-sm-3 col-form-label">Barcode</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="barcode" id="barcode" value="{{ old('barcode') }}">
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="nama_barang" class="col-sm-3 col-form-label">Nama Barang</label>
                     <div class="col-sm-9">
@@ -115,31 +121,31 @@
                 <div class="form-group row">
                     <label for="merek" class="col-sm-3 col-form-label">Merek</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="merek" name="merek" id="merek" value="{{ old('merek') }}">
+                        <input class="form-control" type="text" name="merek" id="merek" value="{{ old('merek') }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="stok" class="col-sm-3 col-form-label">Stok</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="password" name="stok" id="stok" value="{{ old('stok') }}">
+                        <input class="form-control" type="text" name="stok" id="stok" value="{{ old('stok') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="stok" class="col-sm-3 col-form-label">Stok</label>
+                    <label for="diskon" class="col-sm-3 col-form-label">Diskon</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="password" name="stok" id="stok" value="{{ old('stok') }}">
+                        <input class="form-control" type="text" name="diskon" id="diskon" value="{{ old('diskon') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="stok" class="col-sm-3 col-form-label">Stok</label>
+                    <label for="harga_beli" class="col-sm-3 col-form-label">Harga Beli</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="password" name="stok" id="stok" value="{{ old('stok') }}">
+                        <input class="form-control" type="text" name="harga_beli" id="harga_beli" value="{{ old('harga_beli') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="stok" class="col-sm-3 col-form-label">Stok</label>
+                    <label for="harga_jual" class="col-sm-3 col-form-label">Harga Jual</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="password" name="stok" id="stok" value="{{ old('stok') }}">
+                        <input class="form-control" type="text" name="harga_jual" id="harga_jual" value="{{ old('harga_jual') }}">
                     </div>
                 </div>
             </div>
@@ -227,34 +233,39 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="mx-auto d-flex justify-content-center">
-                <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display"  style="width: 150px; height:150px;">
-            </div>
-            <hr>
             <table class="table">
                 <tbody>
                     <tr>
-                        <td style="width: 150px">Kode Member</td>
-                        <td scope="col" id="detailKode"></td>
+                        <td style="width: 150px">Barcode</td>
+                        <td scope="col" id="detailBarcode"></td>
                     </tr>
                     <tr>
-                        <td style="width: 150px">Nama</td>
-                        <td scope="col" id="detailName"></td>
+                        <td style="width: 150px">Nama Barang</td>
+                        <td scope="col" id="detailNama"></td>
                     </tr>
                     <tr>
-                        <td style="width: 150px">Email</td>
-                        <td scope="col" id="detailEmail"></td>
-                    </tr><tr>
-                        <td style="width: 150px">Umur</td>
-                        <td scope="col" id="detailUmur"></td>
+                        <td style="width: 150px">Kategori</td>
+                        <td scope="col" id="detailKategori"></td>
                     </tr>
                     <tr>
-                        <td style="width: 150px">Tgl. Lahir</td>
-                        <td scope="col" id="detailTgl"></td>
+                        <td style="width: 150px">Merek</td>
+                        <td scope="col" id="detailMerek"></td>
                     </tr>
                     <tr>
-                        <td style="width: 150px">Alamat</td>
-                        <td scope="col" id="detailAlamat"></td>
+                        <td style="width: 150px">Stok</td>
+                        <td scope="col" id="detailStok"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 150px">Diskon</td>
+                        <td scope="col" id="detailDiskon"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 150px">Harga Beli</td>
+                        <td scope="col" id="detailBeli"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 150px">Harga Jual</td>
+                        <td scope="col" id="detailJual"></td>
                     </tr>
                 </tbody>
             </table>
@@ -301,7 +312,7 @@
             // Get Data for Form Update
             $('.btnEdit').on('click', function(){
                 const id = $(this).data('id');
-                $('#formEdit').attr('action', `{{ url('member/${id}/edit') }}`);
+                $('#formEdit').attr('action', `{{ url('barang/${id}/edit') }}`);
                 $.ajax({
                     url:`{{ url('member/getdata/${id}') }}`,
                     method:'get',
@@ -321,27 +332,19 @@
             $('.btnDetail').on('click', function(){
                 const id = $(this).data('id');
                 $.ajax({
-                    url:`{{ url('member/getdata/${id}') }}`,
+                    url:`{{ url('barang/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
                         console.log(data);
-                        dob = new Date(data.tgl_lahir);
-                        var today = new Date();
-                        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-                        $('#detail img').attr('src', data.foto_profil);
-                        $('#detail #detailName').text(data.name);
-                        $('#detail #detailKode').text(data.kode_member);
-                        $('#detail #detailRole').text(data.role);
-                        $('#detail #detailEmail').text(data.email);
-                        if (data.tgl_lahir == null) {
-                            $('#detail #detailTgl').text('-');
-                            $('#detail #detailUmur').text('-');
-                        } else {
-                            $('#detail #detailTgl').text(data.tgl_lahir);
-                            $('#detail #detailUmur').text(age);
-                        }
-                        (data.alamat !== null)?$('#detail #detailAlamat').text(data.alamat):$('#detail #detailAlamat').text('-');
+                        $('#detail #detailBarcode').text(data.barcode);
+                        $('#detail #detailNama').text(data.nama_barang);
+                        $('#detail #detailKategori').text(data.kategori);
+                        $('#detail #detailMerek').text(data.merek);
+                        $('#detail #detailDiskon').text(data.diskon);
+                        $('#detail #detailStok').text(data.stok);
+                        $('#detail #detailBeli').text(data.harga_beli);
+                        $('#detail #detailJual').text(data.harga_jual);
                     
                     }
                 });

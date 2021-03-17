@@ -135,8 +135,8 @@
                             <a href="{{ url('/supplier') }}">
                                 <i class="fas fa-users"></i>Supplier</a>
                         </li>
-                        <li class="">
-                            <a href="#">
+                        <li class="{{ ($menu == 'barang')?'active':'' }}">
+                            <a href="{{ url('/barang') }}">
                                 <i class="fas fa-box"></i>Barang</a>
                         </li>
                         <li class="">
