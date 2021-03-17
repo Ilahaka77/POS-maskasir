@@ -172,44 +172,57 @@
             <form action="" method="POST" id="formEdit" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-                <div class="form-group">
-                    <div class="mx-auto d-flex justify-content-center">
-                        <img class="mx-auto d-block image img-cir" src="{{ asset('images/no-image-available.png') }}" alt="Card image cap" id="display_edit"  style="width: 150px; height:150px;">
-                    </div>
-                    <hr>
-                    <div class="card-text text-sm-center">
-                        <input type="file" name="foto_profil" id="foto_profil_edit" style="display: none">
-                        <label for="foto_profil_edit" class="btn btn-outline-primary">Pilih Foto</label>
-                        @error('foto_profil')
-                            <span style="display: block">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                <div class="form-group row">
+                    <label for="barcode" class="col-sm-3 col-form-label">Barcode</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="barcode" id="barcode" value="{{ old('barcode') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="name" class="col-sm-3 col-form-label">Nama</label>
+                    <label for="nama_barang" class="col-sm-3 col-form-label">Nama Barang</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="text" name="name" id="name">
+                        <input class="form-control" type="text" name="nama_barang" id="nama_barang" value="{{ old('nama_barang') }}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="email" class="col-sm-3 col-form-label">Email</label>
+                    <label for="kategori" class="col-sm-3 col-form-label">kategori</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="email" name="email" id="email">
+                        <select name="kategori" id="kategori" class="form-control">
+                            <option value="">-- Pilih Kategori --</option>
+                            @foreach ($kategori as $item)
+                                <option value="{{ $item->id }}">{{ $item->kategori }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
-                
                 <div class="form-group row">
-                    <label for="tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                    <label for="merek" class="col-sm-3 col-form-label">Merek</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="date" name="tgl_lahir" id="edit_tanggal">
+                        <input class="form-control" type="text" name="merek" id="merek" value="{{ old('merek') }}">
                     </div>
                 </div>
-                <div class="form-group row" >
-                    <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                <div class="form-group row">
+                    <label for="stok" class="col-sm-3 col-form-label">Stok</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5"></textarea>
+                        <input class="form-control" type="text" name="stok" id="stok" value="{{ old('stok') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="diskon" class="col-sm-3 col-form-label">Diskon</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="diskon" id="diskon" value="{{ old('diskon') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="harga_beli" class="col-sm-3 col-form-label">Harga Beli</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="harga_beli" id="harga_beli" value="{{ old('harga_beli') }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="harga_jual" class="col-sm-3 col-form-label">Harga Jual</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="harga_jual" id="harga_jual" value="{{ old('harga_jual') }}">
                     </div>
                 </div>
             </div>
@@ -281,46 +294,19 @@
     <script>
         $(document).ready(function(){
             var table = $('#table_id').DataTable();
-            // Display image
-            $('#foto_profil').change(function(){
-                const file = this.files[0];
-
-                if(file){
-                    const reader = new FileReader();
-
-                    reader.addEventListener("load", function(){
-                        document.getElementById('display').setAttribute('src', this.result);
-                    });
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
-            $('#foto_profil_edit').change(function(){
-                const file = this.files[0];
-
-                if(file){
-                    const reader = new FileReader();
-
-                    reader.addEventListener("load", function(){
-                        document.getElementById('display_edit').setAttribute('src', this.result);
-                    });
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
 
             // Get Data for Form Update
             $('.btnEdit').on('click', function(){
                 const id = $(this).data('id');
                 $('#formEdit').attr('action', `{{ url('barang/${id}/edit') }}`);
                 $.ajax({
-                    url:`{{ url('member/getdata/${id}') }}`,
+                    url:`{{ url('barang/getdata/${id}') }}`,
                     method:'get',
                     dataType:'json',
                     success:function(data){
                         console.log(data);
-                        $('#formEdit img').attr('src', data.foto_profil);
-                        $('#formEdit #name').val(data.name);
+                        $('#formEdit #barcode').val(data.barcode);  
+                        $('#formEdit #nama_barang').val(data.nama_barang);
                         $('#formEdit #email').val(data.email);
                         $('#formEdit #edit_tanggal').val(data.tgl_lahir);
                         $('#formEdit #alamat').val(data.alamat);
@@ -341,7 +327,7 @@
                         $('#detail #detailNama').text(data.nama_barang);
                         $('#detail #detailKategori').text(data.kategori);
                         $('#detail #detailMerek').text(data.merek);
-                        $('#detail #detailDiskon').text(data.diskon);
+                        $('#detail #detailDiskon').text(data.diskon+'%');
                         $('#detail #detailStok').text(data.stok);
                         $('#detail #detailBeli').text(data.harga_beli);
                         $('#detail #detailJual').text(data.harga_jual);
