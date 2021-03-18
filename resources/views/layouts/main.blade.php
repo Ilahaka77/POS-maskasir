@@ -139,6 +139,14 @@
                             <a href="{{ url('/barang') }}">
                                 <i class="fas fa-box"></i>Barang</a>
                         </li>
+                        <li class="{{ ($menu == 'kategori')?'active':'' }}">
+                            <a href="{{ url('/kategori') }}">
+                                <i class="fas fa-tags"></i>Kategori</a>
+                        </li>
+                        <li class="{{ ($menu == 'pengeluaran')?'active':'' }}">
+                            <a href="{{ url('/pengeluaran') }}">
+                                <i class="fas fa-money-bill-wave"></i>Pengeluaran</a>
+                        </li>
                         <li class="">
                             <a href="#">
                                 <i class="fas fa-shopping-cart"></i>Transaksi</a>
@@ -147,14 +155,7 @@
                             <a href="#">
                                 <i class="fas fa-shopping-bag"></i>Pembelian</a>
                         </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-tags"></i>Kategori</a>
-                        </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fas fa-money-bill-wave"></i>Pengeluaran</a>
-                        </li>
+                        
                     </ul>
                 </nav>
             </div>

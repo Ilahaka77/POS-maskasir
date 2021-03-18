@@ -163,7 +163,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateLabel">Edit Member</h5>
+          <h5 class="modal-title" id="updateLabel">Edit Barang</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -240,7 +240,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="detailLabel">Detail Member</h5>
+          <h5 class="modal-title" id="detailLabel">Detail Barang</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -307,9 +307,12 @@
                         console.log(data);
                         $('#formEdit #barcode').val(data.barcode);  
                         $('#formEdit #nama_barang').val(data.nama_barang);
-                        $('#formEdit #email').val(data.email);
-                        $('#formEdit #edit_tanggal').val(data.tgl_lahir);
-                        $('#formEdit #alamat').val(data.alamat);
+                        $(`#formEdit #kategori option[value="${data.kategori_id}"]`).attr('selected', 'selected');
+                        $('#formEdit #merek').val(data.merek);
+                        $('#formEdit #diskon').val(data.diskon);
+                        $('#formEdit #stok').val(data.stok);
+                        $('#formEdit #harga_beli').val(data.harga_beli);
+                        $('#formEdit #harga_jual').val(data.harga_jual);
                     }
                 });
             });

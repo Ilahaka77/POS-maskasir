@@ -48,6 +48,19 @@ Route::put('/supplier/{id}/edit', 'SupplierController@update')->middleware('auth
 Route::get('/barang', 'BarangController@index')->middleware('auth', 'verified');
 Route::post('/barang', 'BarangController@create')->middleware('auth', 'verified');
 Route::get('/barang/getdata/{id}', 'BarangController@getData')->middleware('auth', 'verified');
+Route::put('/barang/{id}/edit', 'BarangController@update')->middleware('auth', 'verified');
+
+//Route Menu CRUD Kategori
+Route::get('/kategori', 'KategoriController@index')->middleware('auth', 'verified');
+Route::post('/kategori', 'KategoriController@create')->middleware('auth', 'verified');
+Route::get('/kategori/getdata/{id}', 'KategoriController@getData')->middleware('auth', 'verified');
+Route::put('/kategori/{id}/edit', 'KategoriController@update')->middleware('auth', 'verified');
+
+//Route Menu CRUD Pengeluaran
+Route::get('/pengeluaran', 'PengeluaranController@index')->middleware('auth', 'verified');
+Route::post('/pengeluaran', 'PengeluaranController@create')->middleware('auth', 'verified');
+Route::get('/pengeluaran/getdata/{id}', 'PengeluaranController@getData')->middleware('auth', 'verified');
+Route::put('/pengeluaran/{id}/edit', 'PengeluaranController@update')->middleware('auth', 'verified');
 
 Route::get('/notifrole', function () {
     return view('notifrole');

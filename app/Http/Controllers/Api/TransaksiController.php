@@ -146,7 +146,6 @@ class TransaksiController extends Controller
         }else{
             foreach ($detail as $key => $value) {
                 // dd($harga);
-                
                 $transaksi->harga_total = $transaksi->harga_total + $value->harga;
             }
             $transaksi->save();
