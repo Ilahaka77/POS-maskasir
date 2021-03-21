@@ -26,7 +26,7 @@
     </div>
 </div>
 @endsection --}}
-@extends('layouts.main')
+@extends('layouts.second')
 
 @section('content')
 <div class="main-content">

@@ -62,6 +62,10 @@ Route::post('/pengeluaran', 'PengeluaranController@create')->middleware('auth', 
 Route::get('/pengeluaran/getdata/{id}', 'PengeluaranController@getData')->middleware('auth', 'verified');
 Route::put('/pengeluaran/{id}/edit', 'PengeluaranController@update')->middleware('auth', 'verified');
 
+//Route Menu Pembelian
+Route::get('/pembelian', 'PembelianController@index')->middleware('auth', 'verified');
+Route::get('/pembelian/baru', 'PembelianController@newPembelian')->middleware('auth', 'verified');
+
 Route::get('/notifrole', function () {
     return view('notifrole');
 });

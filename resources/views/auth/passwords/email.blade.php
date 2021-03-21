@@ -47,7 +47,7 @@
 @endsection --}}
 @extends('layouts.second')
 
-@section('title', 'Login')
+@section('title', 'Kirim Link Reset Password')
 
 @section('content')
 <div class="page-wrapper">
@@ -58,6 +58,11 @@
                     <div class="login-logo d-flex justify-content-center">
                         <span style="font-size: 60px"><i class="fas fa-wrench"></i></span>&nbsp;<h3 class="align-self-center">Forgot Password</h3>
                     </div>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <div class="login-form">
                         <form action="{{ route('password.email') }}" method="post">
                             @csrf

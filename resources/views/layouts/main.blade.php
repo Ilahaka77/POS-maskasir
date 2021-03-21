@@ -151,8 +151,8 @@
                             <a href="#">
                                 <i class="fas fa-shopping-cart"></i>Transaksi</a>
                         </li>
-                        <li class="">
-                            <a href="#">
+                        <li class="{{ ($menu == 'pembelian')?'active':'' }}">
+                            <a href="{{ url('/pembelian') }}">
                                 <i class="fas fa-shopping-bag"></i>Pembelian</a>
                         </li>
                         
