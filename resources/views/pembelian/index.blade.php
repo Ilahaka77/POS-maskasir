@@ -31,7 +31,7 @@
                                 <div class="table-data__tool-left">
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <a href="{{ url('/pembelian/baru') }}" class="btn btn-primary" style="float: right"><i class="fas fa-plus"></i> Pembelian Baru</a>
+                                    <button type="button" class="btn btn-primary" style="float: right" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Pembelian Baru</button>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                             <td>{{ $item->diskon }}</td>
                                             <td>{{ $item->total_bayar }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary"><i class="fas fa-eye"></i></button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail"><i class="fas fa-eye"></i></button>
                                             </td>
                                         @endforeach
                                     </tr>
@@ -82,108 +82,54 @@
 </div>
 
 {{-- Modal Detail --}}
-<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="detailLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+
+{{-- Modal Select Supplier --}}
+<div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="detailLabel">Detail Barang</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td style="width: 150px">Barcode</td>
-                        <td scope="col" id="detailBarcode"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Nama Barang</td>
-                        <td scope="col" id="detailNama"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Kategori</td>
-                        <td scope="col" id="detailKategori"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Merek</td>
-                        <td scope="col" id="detailMerek"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Stok</td>
-                        <td scope="col" id="detailStok"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Diskon</td>
-                        <td scope="col" id="detailDiskon"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Harga Beli</td>
-                        <td scope="col" id="detailBeli"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 150px">Harga Jual</td>
-                        <td scope="col" id="detailJual"></td>
-                    </tr>
-                </tbody>
-            </table>
+          <table class="table">
+            <thead>
+                <tr>
+                    <th>Supplier</th>
+                    <th>No. Telepon</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    @foreach ($supplier as $item)
+                        <tr>
+                            <td>{{ $item->nama_supplier }}</td>                        
+                            <td>{{ $item->no_telepon }}</td>          
+                            <td>
+                                <a href="{{ url('/pembelian/baru/'.$item->id) }}" class="btn btn-primary">Pilih</a>
+                            </td>     
+                        </tr>             
+                    @endforeach
+            </tbody>
+          </table>
+        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-</div>
+  </div>
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function(){
-            var table = $('#table_id').DataTable();
+            var table = $('.table').DataTable();
 
-            // Get Data for Form Update
-            $('.btnEdit').on('click', function(){
-                const id = $(this).data('id');
-                $('#formEdit').attr('action', `{{ url('barang/${id}/edit') }}`);
-                $.ajax({
-                    url:`{{ url('barang/getdata/${id}') }}`,
-                    method:'get',
-                    dataType:'json',
-                    success:function(data){
-                        console.log(data);
-                        $('#formEdit #barcode').val(data.barcode);  
-                        $('#formEdit #nama_barang').val(data.nama_barang);
-                        $(`#formEdit #kategori option[value="${data.kategori_id}"]`).attr('selected', 'selected');
-                        $('#formEdit #merek').val(data.merek);
-                        $('#formEdit #diskon').val(data.diskon);
-                        $('#formEdit #stok').val(data.stok);
-                        $('#formEdit #harga_beli').val(data.harga_beli);
-                        $('#formEdit #harga_jual').val(data.harga_jual);
-                    }
-                });
-            });
-
-            //Get Data for Detail 
-            $('.btnDetail').on('click', function(){
-                const id = $(this).data('id');
-                $.ajax({
-                    url:`{{ url('barang/getdata/${id}') }}`,
-                    method:'get',
-                    dataType:'json',
-                    success:function(data){
-                        console.log(data);
-                        $('#detail #detailBarcode').text(data.barcode);
-                        $('#detail #detailNama').text(data.nama_barang);
-                        $('#detail #detailKategori').text(data.kategori);
-                        $('#detail #detailMerek').text(data.merek);
-                        $('#detail #detailDiskon').text(data.diskon+'%');
-                        $('#detail #detailStok').text(data.stok);
-                        $('#detail #detailBeli').text(data.harga_beli);
-                        $('#detail #detailJual').text(data.harga_jual);
-                    
-                    }
-                });
-            });
         });
     </script>
 @endsection
