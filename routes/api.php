@@ -57,12 +57,13 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //CRUD Pembelian
     Route::get('/pembelian', 'Api\PembelianController@index');
-    Route::post('/pembelian/new', 'Api\PembelianController@newPembelian');
+    Route::post('/pembelian/new', 'Api\PembelianController@create');
     Route::get('/pembelian/{id}', 'Api\PembelianController@show');
-    Route::post('/pembelian/add/{id}', 'Api\PembelianController@addItem');
+    Route::put('/pembelian/add/{id}', 'Api\PembelianController@addItem');
     Route::put('/pembelian/edit/{id}', 'Api\PembelianController@editItem');
     Route::delete('/pembelian/delete/{id}', 'Api\PembelianController@deleteItem');
-    Route::get('/pembelian/save/{id}', 'Api\PembelianController@save');
+    Route::delete('/pembelian/cencel/{id}', 'Api\PembelianController@cencel');
+
 
     //CRUD Member
     Route::post('/member', 'Api\MemberController@create');
