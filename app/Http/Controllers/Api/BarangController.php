@@ -19,6 +19,20 @@ class BarangController extends Controller
         ], 200);
     }
 
+    public function cariBarcode(Request $request){
+        try {
+            $barang = Barang::where('barcode', '=', $request->barcode);
+            return response()->json([
+                'data' => new BarangResource($barang)
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], 400);
+        }
+    }
+
     public function show($id)
     {
         $barang = Barang::find($id);

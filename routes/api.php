@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //CRUD Barang
     Route::get('/barang', 'Api\BarangController@index');
     Route::post('/barang', 'Api\BarangController@create');
+    Route::post('/barang/cari', 'Api\BarangController@cariBarcode');
     Route::get('/barang/{id}', 'Api\BarangController@show');
     Route::put('/barang/{id}', 'Api\BarangController@update');
 
@@ -59,7 +60,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/pembelian', 'Api\PembelianController@index');
     Route::post('/pembelian/new', 'Api\PembelianController@create');
     Route::get('/pembelian/{id}', 'Api\PembelianController@show');
-    Route::put('/pembelian/add/{id}', 'Api\PembelianController@addItem');
+    Route::post('/pembelian/add/{id}', 'Api\PembelianController@addItem');
     Route::put('/pembelian/edit/{id}', 'Api\PembelianController@editItem');
     Route::delete('/pembelian/delete/{id}', 'Api\PembelianController@deleteItem');
     Route::delete('/pembelian/cencel/{id}', 'Api\PembelianController@cencel');
