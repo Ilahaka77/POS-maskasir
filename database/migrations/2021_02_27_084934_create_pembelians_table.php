@@ -16,8 +16,8 @@ class CreatePembeliansTable extends Migration
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
             $table->foreignId('supplier_id')->constrained('suppliers');
-            $table->integer('diskon');
-            $table->integer('total_bayar');
+            $table->integer('diskon')->nullable();
+            $table->integer('total_bayar')->nullable();
             $table->timestamps();
         });
     }

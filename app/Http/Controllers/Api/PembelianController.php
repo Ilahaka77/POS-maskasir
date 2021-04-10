@@ -55,8 +55,8 @@ class PembelianController extends Controller
         try {
             $pembelian = Pembelian::create([
                 'supplier_id' => $request->supplier,
-                'diskon' => 0,
-                'total_bayar' => 0
+                'diskon' => 1,
+                'total_bayar' => 1
             ]);
 
             return response()->json([
