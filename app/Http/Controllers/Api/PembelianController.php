@@ -16,10 +16,10 @@ class PembelianController extends Controller
     
     public function index()
     {
-        $pembelian = Pembelian::with('supplier')->get();
+        $pembelian = Pembelian::select('pembelians.id', 'suppliers.nama_suppliers', 'pembelians.diskon', 'pembelians.total_bayar', 'pembelians.created_at as tanggal')->join('suppliers', 'pembelians.supplier_id', '=', 'suppliers.id')->get();
         // dd($pembelian);
         return response()->json([
-            'data' => PembelianResource::collection($pembelian)
+            'data' => $pembelian
         ],200);
     }
 
