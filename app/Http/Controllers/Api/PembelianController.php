@@ -26,7 +26,7 @@ class PembelianController extends Controller
     public function show($id)
     {
         $pembelian = DB::table('pembelians')->select('pembelians.id','suppliers.nama_supplier', 'pembelians.total_bayar')
-            ->where('pembelians.id', '=', $id)->first();
+            ->where('pembelians.id', '=', $id)->join('suppliers', 'pembelians.supplier_id', '=', 'suppliers.id')->first();
         $detail = DB::table('detail_pembelians')
             ->select('detail_pembelians.id','barangs.barcode','barangs.nama_barang', 'categories.kategori', 'barangs.merek', 'detail_pembelians.jumlah', 'detail_pembelians.harga')
             ->where('detail_pembelians.pembelian_id', '=', $id)
